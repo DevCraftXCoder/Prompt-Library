@@ -1,0 +1,32 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.key
+
+# Node (if build tooling is added)
+node_modules/
+dist/
+build/
+.next/
+out/
+
+# IDE and editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Test output
+coverage/
+.nyc_output/
+
+# OS
+Thumbs.db

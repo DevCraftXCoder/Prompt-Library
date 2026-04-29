@@ -1,0 +1,298 @@
+[
+  {
+    "id": "build-code-review-q-001",
+    "tier": "quick",
+    "domain": "Build",
+    "section": "Code Review",
+    "tags": ["code-quality", "correctness"],
+    "prompt": "Review this function for edge cases and return a bullet list of issues only. Do not suggest refactors. Focus on correctness and missing error handling."
+  },
+  {
+    "id": "build-code-review-q-002",
+    "tier": "quick",
+    "domain": "Build",
+    "section": "Code Review",
+    "tags": ["code-quality", "security"],
+    "prompt": "Identify every place in this code where user input is used without validation. List each location as: FILE: <path> | LINE: <number> | ISSUE: <one sentence>."
+  },
+  {
+    "id": "build-code-review-c-001",
+    "tier": "combo",
+    "domain": "Build",
+    "section": "Code Review",
+    "tags": ["code-quality", "workflow"],
+    "prompt": "Step 1: Audit this code section. List every issue as: [SEVERITY: HIGH|MEDIUM|LOW] FINDING: <description> | FILE: <path> | LINE: <number>.\n\nStep 2 (use Step 1 output): For each HIGH or MEDIUM finding, provide the exact fixed code block. No explanation — code only."
+  },
+  {
+    "id": "build-code-review-p-001",
+    "tier": "paragraph",
+    "domain": "Build",
+    "section": "Code Review",
+    "tags": ["code-quality", "report"],
+    "prompt": "You are a senior engineer performing a formal code review. Produce a complete review report for the code below. Include: executive summary (2 sentences), critical issues (with file/line/fix), moderate issues (with description and recommended fix), style and consistency notes, and a final verdict (approve / approve with changes / reject). Structure with clear headers.\n\nCode: [paste code here]"
+  },
+  {
+    "id": "build-debug-q-001",
+    "tier": "quick",
+    "domain": "Build",
+    "section": "Debug",
+    "tags": ["debugging", "root-cause"],
+    "prompt": "Read the stack trace below and identify the root cause in one sentence. Then state which file and line to fix, and what the fix is."
+  },
+  {
+    "id": "build-debug-q-002",
+    "tier": "quick",
+    "domain": "Build",
+    "section": "Debug",
+    "tags": ["debugging", "hypothesis"],
+    "prompt": "Given this error and the surrounding code, list three hypotheses for the root cause in order of likelihood. For each: state the hypothesis, what evidence supports it, and how to confirm it in one command."
+  },
+  {
+    "id": "build-debug-c-001",
+    "tier": "combo",
+    "domain": "Build",
+    "section": "Debug",
+    "tags": ["debugging", "workflow"],
+    "prompt": "Step 1: Analyze this error and produce a ranked list of root cause hypotheses.\n\nStep 2 (after confirming hypothesis from Step 1): Write the minimal code change that fixes the confirmed root cause. Include only the changed lines with enough context to locate them."
+  },
+  {
+    "id": "build-implement-q-001",
+    "tier": "quick",
+    "domain": "Build",
+    "section": "Implement Feature",
+    "tags": ["implementation", "planning"],
+    "prompt": "List the files I need to create or modify to implement this feature. For each file, state the change in one sentence. No code yet."
+  },
+  {
+    "id": "build-implement-p-001",
+    "tier": "paragraph",
+    "domain": "Build",
+    "section": "Implement Feature",
+    "tags": ["implementation", "complete"],
+    "prompt": "Implement the feature described below completely and correctly. Include all files that need to be created or modified. For each file, show the full updated content. At the end, list any environment variables, migrations, or configuration changes required.\n\nFeature: [paste feature description here]\nConstraints: [paste any constraints here]"
+  },
+  {
+    "id": "build-architecture-p-001",
+    "tier": "paragraph",
+    "domain": "Build",
+    "section": "Architecture",
+    "tags": ["architecture", "design"],
+    "prompt": "Produce a complete architecture proposal for the feature described below. Include: overview (2 sentences), component diagram (ASCII box-drawing, not Mermaid), tech stack with rationale for each choice, data model (table names, key columns, indexes), API contract (method, path, request, response), security considerations, and open questions.\n\nFeature: [paste feature description here]"
+  },
+  {
+    "id": "build-tests-q-001",
+    "tier": "quick",
+    "domain": "Build",
+    "section": "Write Tests",
+    "tags": ["testing", "coverage"],
+    "prompt": "List the test cases needed to achieve complete coverage of this function. For each case: input, expected output, and the scenario it covers. No code yet."
+  },
+  {
+    "id": "build-tests-p-001",
+    "tier": "paragraph",
+    "domain": "Build",
+    "section": "Write Tests",
+    "tags": ["testing", "complete"],
+    "prompt": "Write a complete test suite for the function below. Include: happy path tests, edge cases (empty input, null, boundary values), error cases, and any async or race condition tests if applicable. Use the testing framework already present in the codebase.\n\nFunction: [paste function here]"
+  },
+  {
+    "id": "ship-release-q-001",
+    "tier": "quick",
+    "domain": "Ship",
+    "section": "Release Notes",
+    "tags": ["release", "changelog"],
+    "prompt": "Write release notes for this diff. Group by: New Features, Bug Fixes, Breaking Changes, Internal. Each entry is one sentence. Audience: developers."
+  },
+  {
+    "id": "ship-release-p-001",
+    "tier": "paragraph",
+    "domain": "Ship",
+    "section": "Release Notes",
+    "tags": ["release", "user-facing"],
+    "prompt": "Write user-facing release notes for version [VERSION]. Tone: clear, professional, non-technical. Include: what changed and why it matters to the user, any action required on their part, and a one-sentence summary at the top.\n\nChanges: [paste changelog or diff summary here]"
+  },
+  {
+    "id": "ship-deploy-q-001",
+    "tier": "quick",
+    "domain": "Ship",
+    "section": "Deploy",
+    "tags": ["deployment", "checklist"],
+    "prompt": "List every pre-deploy check required for this change. For each check: what to verify, the command to run, and the expected output."
+  },
+  {
+    "id": "ship-deploy-c-001",
+    "tier": "combo",
+    "domain": "Ship",
+    "section": "Deploy",
+    "tags": ["deployment", "workflow"],
+    "prompt": "Step 1: List every pre-deploy check for this change.\n\nStep 2 (after checks pass): Write the deploy commands in order. Include rollback command at the end.\n\nStep 3 (after deploy): List the post-deploy verification steps. For each: what to check and how to confirm success."
+  },
+  {
+    "id": "run-secure-threat-model-p-001",
+    "tier": "paragraph",
+    "domain": "Run & Secure",
+    "section": "Threat Modeling",
+    "tags": ["security", "threat-model", "stride"],
+    "prompt": "You are a senior security architect. Produce a complete threat model for the system described below using the STRIDE framework. Include: system description, trust boundaries, data flows, threat table (threat / attack vector / mitigation / severity), MITRE ATT&CK technique mappings where applicable, and a prioritized remediation list.\n\nSystem: [paste system description here]"
+  },
+  {
+    "id": "run-secure-threat-model-q-001",
+    "tier": "quick",
+    "domain": "Run & Secure",
+    "section": "Threat Modeling",
+    "tags": ["security", "threat-model"],
+    "prompt": "Identify the three highest-risk attack vectors in this system description. For each: name the vector, the asset at risk, and one mitigation."
+  },
+  {
+    "id": "run-secure-security-review-p-001",
+    "tier": "paragraph",
+    "domain": "Run & Secure",
+    "section": "Security Review",
+    "tags": ["security", "audit", "report"],
+    "prompt": "Perform a security review of the code below. Produce a structured report with: executive summary, critical findings (CVSS score, description, reproduction steps, fix), high and medium findings (description and fix), informational notes, and overall risk rating (Critical / High / Medium / Low).\n\nCode: [paste code here]"
+  },
+  {
+    "id": "run-secure-security-review-c-001",
+    "tier": "combo",
+    "domain": "Run & Secure",
+    "section": "Security Review",
+    "tags": ["security", "audit", "workflow"],
+    "prompt": "Step 1: Audit this code for security issues. List each as: [SEVERITY] FINDING: <description> | CWE: <number> | FILE: <path> | LINE: <number>.\n\nStep 2 (use Step 1 output): For each CRITICAL or HIGH finding, provide the exact secure code replacement. Code only, no explanation."
+  },
+  {
+    "id": "run-secure-incident-p-001",
+    "tier": "paragraph",
+    "domain": "Run & Secure",
+    "section": "Incident Response",
+    "tags": ["security", "incident", "postmortem"],
+    "prompt": "Write an incident response postmortem for the incident described below. Include: incident summary, timeline, root cause analysis (5-whys), impact assessment, what went well, what went wrong, action items (with owner and due date), and lessons learned.\n\nIncident: [paste incident description here]"
+  },
+  {
+    "id": "know-grow-research-p-001",
+    "tier": "paragraph",
+    "domain": "Know & Grow",
+    "section": "Research",
+    "tags": ["research", "analysis"],
+    "prompt": "Research the topic below and produce a structured summary. Include: what it is (2 sentences), how it works (technical detail appropriate for a senior engineer), trade-offs vs. alternatives, known failure modes, and recommended use cases.\n\nTopic: [paste topic here]"
+  },
+  {
+    "id": "know-grow-adr-p-001",
+    "tier": "paragraph",
+    "domain": "Know & Grow",
+    "section": "ADR",
+    "tags": ["architecture", "decision", "documentation"],
+    "prompt": "Write an Architecture Decision Record (ADR) for the decision described below. Follow this format: Title, Status (Proposed / Accepted / Deprecated / Superseded), Context (what problem are we solving), Decision (what we chose and why), Alternatives considered (with trade-offs), Consequences (positive and negative), and Date.\n\nDecision: [paste decision description here]"
+  },
+  {
+    "id": "know-grow-postmortem-p-001",
+    "tier": "paragraph",
+    "domain": "Know & Grow",
+    "section": "Postmortem",
+    "tags": ["reliability", "postmortem", "learning"],
+    "prompt": "Write a blameless postmortem for the outage described below. Include: impact summary, timeline (UTC timestamps), root cause, contributing factors, detection and response analysis, action items (owner, due date, priority), and a one-paragraph executive summary.\n\nOutage: [paste outage description here]"
+  },
+  {
+    "id": "connect-people-pr-review-q-001",
+    "tier": "quick",
+    "domain": "Connect & People",
+    "section": "PR Review",
+    "tags": ["collaboration", "code-review"],
+    "prompt": "Review this pull request description. State: is the scope clear, is the test coverage mentioned, are there missing sections, and what one question would you ask the author before approving."
+  },
+  {
+    "id": "connect-people-pr-review-p-001",
+    "tier": "paragraph",
+    "domain": "Connect & People",
+    "section": "PR Review",
+    "tags": ["collaboration", "code-review", "complete"],
+    "prompt": "Write a complete pull request review for the diff below. Provide: overall assessment (approve / request changes / comment), inline comments for specific lines with suggested fixes, a summary of the most critical concerns, and a final recommendation.\n\nDiff: [paste diff here]\nContext: [paste any relevant context about the feature or system]"
+  },
+  {
+    "id": "connect-people-stakeholder-p-001",
+    "tier": "paragraph",
+    "domain": "Connect & People",
+    "section": "Stakeholder Update",
+    "tags": ["communication", "non-technical"],
+    "prompt": "Write a stakeholder update for the work described below. Tone: clear, professional, no jargon. Include: what we did and why it matters, current status, any blockers or risks, and next steps with expected dates. Maximum 200 words.\n\nWork: [paste work description here]"
+  },
+  {
+    "id": "universal-q-001",
+    "tier": "quick",
+    "domain": "Universal",
+    "section": "Universal",
+    "tags": ["universal", "summary"],
+    "prompt": "Summarize this in three bullet points."
+  },
+  {
+    "id": "universal-q-002",
+    "tier": "quick",
+    "domain": "Universal",
+    "section": "Universal",
+    "tags": ["universal", "critical-issue"],
+    "prompt": "What is the single most critical issue here?"
+  },
+  {
+    "id": "universal-q-003",
+    "tier": "quick",
+    "domain": "Universal",
+    "section": "Universal",
+    "tags": ["universal", "clarity"],
+    "prompt": "Rewrite this to be clearer and more concise. Keep all technical content."
+  },
+  {
+    "id": "universal-q-004",
+    "tier": "quick",
+    "domain": "Universal",
+    "section": "Universal",
+    "tags": ["universal", "gaps"],
+    "prompt": "What is missing from this document?"
+  },
+  {
+    "id": "universal-q-005",
+    "tier": "quick",
+    "domain": "Universal",
+    "section": "Universal",
+    "tags": ["universal", "assumptions"],
+    "prompt": "Identify all assumptions embedded in this plan."
+  },
+  {
+    "id": "universal-q-006",
+    "tier": "quick",
+    "domain": "Universal",
+    "section": "Universal",
+    "tags": ["universal", "failure-modes"],
+    "prompt": "What are the failure modes of this approach?"
+  },
+  {
+    "id": "universal-q-007",
+    "tier": "quick",
+    "domain": "Universal",
+    "section": "Universal",
+    "tags": ["universal", "communication"],
+    "prompt": "Translate this for a non-technical stakeholder in two sentences."
+  },
+  {
+    "id": "universal-q-008",
+    "tier": "quick",
+    "domain": "Universal",
+    "section": "Universal",
+    "tags": ["universal", "dependencies"],
+    "prompt": "List the dependencies this change introduces."
+  },
+  {
+    "id": "universal-q-009",
+    "tier": "quick",
+    "domain": "Universal",
+    "section": "Universal",
+    "tags": ["universal", "performance"],
+    "prompt": "What would you change if performance were the only constraint?"
+  },
+  {
+    "id": "universal-q-010",
+    "tier": "quick",
+    "domain": "Universal",
+    "section": "Universal",
+    "tags": ["universal", "security"],
+    "prompt": "What would you change if security were the only constraint?"
+  }
+]
