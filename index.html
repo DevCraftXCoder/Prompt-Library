@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0613" />
+<title>Paste — The Prompt OS for AI Developers</title>
+<meta name="description" content="Discover, organize, and deploy high-quality AI prompts, workflows, and developer systems in one intelligent workspace." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070510;
+  --bg-elev:#0d0a1a;
+  --ink:#f5f3ff;
+  --ink-dim:#9d96b8;
+  --ink-mute:#6b6485;
+  --line:rgba(255,255,255,.06);
+  --line-strong:rgba(255,255,255,.10);
+  --violet:#7c3aed;
+  --violet-2:#a855f7;
+  --pink:#ec4899;
+  --rose:#f43f5e;
+  --glow-violet:rgba(124,58,237,.45);
+  --glow-pink:rgba(236,72,153,.35);
+  --card:rgba(255,255,255,.025);
+  --card-hover:rgba(255,255,255,.045);
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:'Geist',-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{min-height:100vh;font-size:15px;line-height:1.55;letter-spacing:-.005em;position:relative}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+/* ===== Background field ===== */
+.bg-field{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(120px);opacity:.55;mix-blend-mode:screen;animation:drift 22s ease-in-out infinite}
+.blob.b1{width:560px;height:560px;background:radial-gradient(circle,#7c3aed 0%,transparent 70%);top:-180px;left:-120px}
+.blob.b2{width:520px;height:520px;background:radial-gradient(circle,#ec4899 0%,transparent 70%);top:30%;right:-160px;animation-delay:-7s}
+.blob.b3{width:440px;height:440px;background:radial-gradient(circle,#6366f1 0%,transparent 70%);bottom:-120px;left:30%;animation-delay:-14s}
+@keyframes drift{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(40px,-30px) scale(1.08)}
+  66%{transform:translate(-30px,30px) scale(.95)}
+}
+.grid-overlay{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(ellipse at 50% 30%,black 30%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse at 50% 30%,black 30%,transparent 75%)}
+canvas#particles{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.6}
+
+/* ===== Cursor glow ===== */
+.cursor-glow{position:fixed;width:380px;height:380px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(168,85,247,.18) 0%,rgba(236,72,153,.06) 40%,transparent 70%);
+  transform:translate(-50%,-50%);transition:opacity .3s;opacity:0;mix-blend-mode:screen}
+@media (hover:hover){.cursor-glow{opacity:1}}
+
+/* ===== Nav ===== */
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(140%) blur(18px);-webkit-backdrop-filter:saturate(140%) blur(18px);
+  background:rgba(7,5,16,.55);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1280px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.02em}
+.brand-mark{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);box-shadow:0 0 20px var(--glow-violet)}
+.brand-mark svg{width:16px;height:16px;color:#fff}
+.brand-text{display:flex;flex-direction:column;line-height:1}
+.brand-name{font-size:15px;font-weight:600}
+.brand-sub{font-size:10px;color:var(--ink-mute);letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:13.5px;color:var(--ink-dim);transition:color .15s}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:500;
+  transition:transform .15s ease,box-shadow .25s ease,background .15s ease,border-color .15s ease;border:1px solid transparent;white-space:nowrap}
+.btn-ghost{color:var(--ink-dim);border-color:var(--line)}
+.btn-ghost:hover{color:var(--ink);border-color:var(--line-strong);background:rgba(255,255,255,.02)}
+.btn-primary{background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff;
+  box-shadow:0 0 0 0 rgba(168,85,247,.5),0 8px 24px -8px rgba(236,72,153,.4)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 0 0 4px rgba(168,85,247,.18),0 12px 32px -10px rgba(236,72,153,.5)}
+.btn-secondary{background:rgba(255,255,255,.04);color:var(--ink);border-color:var(--line-strong)}
+.btn-secondary:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.16)}
+@media (max-width:760px){.nav-links{display:none}}
+
+/* ===== Hero ===== */
+.hero{position:relative;padding:80px 28px 40px;max-width:1280px;margin:0 auto;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--line-strong);border-radius:999px;
+  background:rgba(255,255,255,.02);font-size:12px;color:var(--ink-dim);margin-bottom:28px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:#10b981;box-shadow:0 0 12px #10b981;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:clamp(36px,6.4vw,76px);line-height:1.02;font-weight:600;letter-spacing:-.035em;
+  max-width:980px;margin:0 auto 24px}
+.hero h1 .grad{background:linear-gradient(180deg,#fff 0%,#cbb6f5 50%,#a855f7 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero h1 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter-spacing:-.01em}
+.hero p.lede{font-size:clamp(15px,1.5vw,18px);color:var(--ink-dim);max-width:620px;margin:0 auto 36px;line-height:1.55}
+.hero-cta{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:48px}
+.btn-lg{padding:13px 22px;font-size:14.5px;border-radius:12px}
+
+/* ===== Command palette / search ===== */
+.cmdk{max-width:680px;margin:0 auto;position:relative}
+.cmdk-shell{position:relative;display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));
+  border:1px solid var(--line-strong);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 1px 0 rgba(0,0,0,.4),0 24px 64px -24px rgba(124,58,237,.35);
+  transition:border-color .25s,box-shadow .25s;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.cmdk-shell:focus-within{border-color:rgba(168,85,247,.5);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 0 0 4px rgba(168,85,247,.12),0 24px 64px -16px rgba(236,72,153,.45)}
+.cmdk-icon{display:grid;place-items:center;width:24px;height:24px;color:var(--ink-dim);flex-shrink:0}
+.cmdk-shell:focus-within .cmdk-icon{color:#c084fc}
+.cmdk input{flex:1;background:transparent;border:0;outline:0;color:var(--ink);font-size:15.5px;font-family:inherit}
+.cmdk input::placeholder{color:var(--ink-mute)}
+.kbd{display:inline-flex;align-items:center;gap:3px;padding:4px 8px;border-radius:6px;font-family:'Geist Mono',monospace;font-size:11px;
+  color:var(--ink-dim);background:rgba(255,255,255,.04);border:1px solid var(--line-strong);box-shadow:inset 0 -1px 0 rgba(0,0,0,.2)}
+.cmdk-hint{margin-top:10px;font-size:12px;color:var(--ink-mute);display:flex;align-items:center;justify-content:center;gap:8px}
+.spark{display:inline-block;color:#c084fc;animation:spark 2.4s ease-in-out infinite}
+@keyframes spark{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.6}}
+
+/* ===== Category pills ===== */
+.pills{margin:32px auto 0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:780px;padding:0 8px}
+.pill{padding:7px 14px;border-radius:999px;font-size:12.5px;color:var(--ink-dim);
+  background:rgba(255,255,255,.025);border:1px solid var(--line);transition:all .18s;cursor:pointer}
+.pill:hover{color:var(--ink);background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.3)}
+.pill.active{color:#fff;background:linear-gradient(135deg,rgba(124,58,237,.25),rgba(236,72,153,.2));border-color:rgba(168,85,247,.45);
+  box-shadow:0 0 0 1px rgba(168,85,247,.2),0 0 24px -4px rgba(168,85,247,.4)}
+
+/* ===== Floating cards (orbit visual) ===== */
+.float-stage{position:relative;max-width:1100px;margin:80px auto 0;height:420px;perspective:1400px}
+.orb{position:absolute;left:50%;top:50%;width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#f5d0fe 0%,#c084fc 25%,#7c3aed 55%,#1e1b4b 90%);
+  transform:translate(-50%,-50%);box-shadow:0 0 80px rgba(168,85,247,.55),inset 0 0 60px rgba(236,72,153,.4);
+  animation:orbpulse 6s ease-in-out infinite}
+@keyframes orbpulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.04)}}
+.orb::after{content:"";position:absolute;inset:-40px;border-radius:50%;border:1px solid rgba(168,85,247,.25);animation:ring 12s linear infinite}
+@keyframes ring{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.float-card{position:absolute;width:240px;padding:14px 16px;border-radius:14px;
+  background:linear-gradient(180deg,rgba(20,14,38,.85),rgba(13,9,26,.85));border:1px solid var(--line-strong);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 24px 60px -20px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.05);
+  font-size:12.5px;color:var(--ink-dim);animation:floaty 8s ease-in-out infinite}
+.float-card .fc-head{display:flex;align-items:center;gap:8px;color:var(--ink);font-size:12px;margin-bottom:8px;font-weight:500}
+.float-card .fc-tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10.5px;font-family:'Geist Mono',monospace;
+  background:rgba(168,85,247,.15);color:#d8b4fe;border:1px solid rgba(168,85,247,.25)}
+.float-card .fc-body{color:var(--ink-mute);line-height:1.5;font-size:12px}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}50%{transform:translateY(-12px) rotate(var(--rot,0deg))}}
+.fc-1{top:10%;left:6%;--rot:-4deg;animation-delay:-1s}
+.fc-2{top:55%;left:0%;--rot:3deg;animation-delay:-3s}
+.fc-3{top:8%;right:6%;--rot:5deg;animation-delay:-2s}
+.fc-4{top:60%;right:2%;--rot:-3deg;animation-delay:-5s}
+@media (max-width:860px){.float-stage{height:auto;margin-top:48px}.orb{position:relative;left:auto;top:auto;transform:none;margin:0 auto;width:180px;height:180px}.float-card{display:none}}
+
+/* ===== Section ===== */
+.section{max-width:1280px;margin:0 auto;padding:96px 28px}
+.section-head{text-align:center;margin-bottom:48px}
+.section-head .eyebrow{margin-bottom:18px}
+.section-head h2{font-size:clamp(28px,3.6vw,44px);font-weight:600;letter-spacing:-.025em;line-height:1.1;margin-bottom:14px}
+.section-head h2 .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+.section-head p{color:var(--ink-dim);max-width:580px;margin:0 auto;font-size:15.5px}
+
+/* ===== Prompt cards grid ===== */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:980px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.cards{grid-template-columns:1fr}}
+.card{position:relative;padding:22px;border-radius:16px;
+  background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.008));
+  border:1px solid var(--line);transition:transform .25s ease,border-color .25s,box-shadow .25s;cursor:pointer;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%),rgba(168,85,247,.10),transparent 40%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover::before{opacity:1}
+.card:hover{transform:translateY(-2px);border-color:rgba(168,85,247,.28);
+  box-shadow:0 24px 48px -24px rgba(124,58,237,.4)}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.card-icon{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;
+  background:linear-gradient(135deg,rgba(168,85,247,.18),rgba(236,72,153,.14));border:1px solid rgba(168,85,247,.25)}
+.card-icon svg{width:16px;height:16px;color:#d8b4fe}
+.card-tag{font-family:'Geist Mono',monospace;font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em}
+.card h3{font-size:16px;font-weight:600;letter-spacing:-.015em;margin-bottom:8px;color:var(--ink)}
+.card p{color:var(--ink-dim);font-size:13.5px;line-height:1.55;margin-bottom:18px}
+.card-meta{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--ink-mute);font-family:'Geist Mono',monospace}
+.card-meta span{display:inline-flex;align-items:center;gap:5px}
+.card-meta svg{width:12px;height:12px}
+
+/* ===== Dashboard preview ===== */
+.dash{position:relative;margin-top:48px;border-radius:18px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(20,14,38,.7),rgba(10,7,20,.85));
+  border:1px solid var(--line-strong);
+  box-shadow:0 60px 120px -40px rgba(124,58,237,.3),0 0 0 1px rgba(255,255,255,.02)}
+.dash-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);background:rgba(0,0,0,.2)}
+.dot-tl{display:flex;gap:6px}
+.dot-tl span{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.08)}
+.dash-url{margin-left:14px;font-family:'Geist Mono',monospace;font-size:11.5px;color:var(--ink-mute);
+  padding:5px 12px;border-radius:6px;background:rgba(255,255,255,.025);border:1px solid var(--line);flex:1;max-width:340px}
+.dash-body{display:grid;grid-template-columns:200px 1fr;min-height:380px}
+@media (max-width:760px){.dash-body{grid-template-columns:1fr}.dash-side{display:none}}
+.dash-side{padding:18px 14px;border-right:1px solid var(--line);background:rgba(0,0,0,.15)}
+.dash-side h4{font-size:10.5px;font-family:'Geist Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin:14px 0 8px;font-weight:500}
+.dash-side h4:first-child{margin-top:0}
+.dash-nav{display:flex;flex-direction:column;gap:2px}
+.dash-nav a{padding:7px 10px;border-radius:7px;font-size:12.5px;color:var(--ink-dim);display:flex;align-items:center;gap:9px}
+.dash-nav a:hover{background:rgba(255,255,255,.03);color:var(--ink)}
+.dash-nav a.on{background:linear-gradient(90deg,rgba(168,85,247,.18),rgba(236,72,153,.06));color:#fff;border:1px solid rgba(168,85,247,.25)}
+.dash-nav svg{width:13px;height:13px;flex-shrink:0}
+.dash-main{padding:24px}
+.dash-main h3{font-size:18px;font-weight:600;letter-spacing:-.015em;margin-bottom:6px}
+.dash-main .crumb{font-size:12px;color:var(--ink-mute);font-family:'Geist Mono',monospace;margin-bottom:18px}
+.terminal{background:#070411;border:1px solid var(--line);border-radius:10px;padding:16px;font-family:'Geist Mono',monospace;font-size:12.5px;line-height:1.7}
+.terminal .prm{color:#a855f7}
+.terminal .cmd{color:#f5f3ff}
+.terminal .out{color:#9d96b8}
+.terminal .ok{color:#10b981}
+.cursor-blink::after{content:"▋";color:#ec4899;animation:blink 1s steps(1) infinite;margin-left:2px}
+@keyframes blink{50%{opacity:0}}
+
+/* ===== Trusted by ===== */
+.trusted{margin-top:80px;padding:44px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.trusted .label{text-align:center;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:24px}
+.logos{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:48px 56px;opacity:.65}
+.logos .logo{font-weight:600;letter-spacing:-.01em;font-size:17px;color:var(--ink-dim);transition:color .2s,opacity .2s}
+.logos .logo:hover{color:var(--ink);opacity:1}
+.logos .logo .mono{font-family:'Geist Mono',monospace;font-size:14px}
+.logos .logo .serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:20px}
+
+/* ===== Final CTA ===== */
+.final{position:relative;text-align:center;padding:100px 28px;max-width:880px;margin:0 auto}
+.final h2{font-size:clamp(34px,5vw,60px);font-weight:600;letter-spacing:-.03em;line-height:1.05;margin-bottom:20px}
+.final h2 .grad{background:linear-gradient(135deg,#fff 0%,#d8b4fe 60%,#f0abfc 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.final p{color:var(--ink-dim);max-width:520px;margin:0 auto 30px;font-size:15.5px}
+
+/* ===== Footer ===== */
+footer{position:relative;padding:32px 28px;border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;max-width:1280px;margin:0 auto}
+.foot-brand{font-size:12.5px;color:var(--ink-mute);font-family:'Geist Mono',monospace}
+.foot-brand b{color:var(--ink-dim);font-weight:500}
+.gh{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:10px;color:var(--ink-dim);
+  background:rgba(255,255,255,.025);border:1px solid var(--line);transition:all .25s}
+.gh:hover{color:#fff;border-color:rgba(168,85,247,.4);
+  box-shadow:0 0 0 4px rgba(168,85,247,.12),0 0 32px rgba(168,85,247,.45)}
+.gh svg{width:18px;height:18px}
+
+/* ===== Reveal ===== */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ===== Hero logo (big, hovering, glowing) ===== */
+.hero-logo{position:relative;display:flex;justify-content:center;align-items:center;margin:0 auto 36px;width:100%;height:auto;perspective:800px}
+.hero-logo .halo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(168,85,247,.55) 0%,rgba(236,72,153,.28) 35%,transparent 70%);
+  filter:blur(60px);opacity:.85;animation:halopulse 5.5s ease-in-out infinite;pointer-events:none;z-index:-1}
+.hero-logo .halo.alt{width:340px;height:340px;background:radial-gradient(circle,rgba(244,63,94,.45) 0%,rgba(168,85,247,.2) 40%,transparent 75%);animation-delay:-2.5s;opacity:.6}
+@keyframes halopulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.7}50%{transform:translate(-50%,-50%) scale(1.12);opacity:1}}
+.hero-logo img{width:clamp(180px,28vw,280px);height:auto;display:block;
+  background:transparent;mix-blend-mode:screen;
+  filter:drop-shadow(0 0 24px rgba(168,85,247,.8)) drop-shadow(0 0 60px rgba(236,72,153,.5)) drop-shadow(0 16px 40px rgba(0,0,0,.6));
+  animation:hover 5s ease-in-out infinite;
+  transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,.8,.2,1),filter .4s}
+.hero-logo img:hover{transform:translateY(-8px) scale(1.04);
+  filter:drop-shadow(0 0 36px rgba(192,132,252,1)) drop-shadow(0 0 80px rgba(244,114,182,.7)) drop-shadow(0 22px 48px rgba(0,0,0,.7))}
+@keyframes hover{0%,100%{transform:translateY(0) rotate(-.4deg)}50%{transform:translateY(-14px) rotate(.4deg)}}
+@media (max-width:640px){.hero-logo .halo{width:340px;height:340px}.hero-logo .halo.alt{width:220px;height:220px}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-field">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+</div>
+<div class="grid-overlay"></div>
+<canvas id="particles"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#" class="brand" aria-label="Paste — AI Prompt Workspace">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2V4a2 2 0 0 1 2-2z"/></svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-name">Paste</span>
+        <span class="brand-sub">AI Prompt Workspace</span>
+      </span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#library">Library</a>
+      <a href="#workflows">Workflows</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#docs">Docs</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="https://github.com/DevCraftXCoder" class="btn btn-ghost" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.92.58.11.79-.25.79-.55v-1.93c-3.2.7-3.87-1.54-3.87-1.54-.52-1.34-1.27-1.7-1.27-1.7-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.76 2.69 1.25 3.34.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.16 1.18.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.49 3.16-1.18 3.16-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.08 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.13v3.16c0 .31.21.67.8.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+        GitHub
+      </a>
+      <a href="#start" class="btn btn-primary">Start Building</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-logo reveal" aria-hidden="true">
+    <span class="halo"></span>
+    <span class="halo alt"></span>
+    <img src="public/paste-logo.png" alt="Paste" decoding="async" />
+  </div>
+  <span class="eyebrow"><span class="dot"></span> Open beta · v0.1 by DevCraftXCoder</span>
+  <h1 class="reveal">
+    <span class="grad">The Prompt OS</span><br/>
+    for <span class="serif">AI developers</span>
+  </h1>
+  <p class="lede reveal">Discover, organize, and deploy high-quality AI prompts, workflows, and developer systems in one intelligent workspace.</p>
+
+  <div class="hero-cta reveal">
+    <a href="#library" class="btn btn-primary btn-lg">
+      Explore Library
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#start" class="btn btn-secondary btn-lg">
+      Start Building
+    </a>
+  </div>
+
+  <div class="cmdk reveal" role="search">
+    <div class="cmdk-shell">
+      <span class="cmdk-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+      </span>
+      <input id="cmdInput" type="text" placeholder="Search prompts, workflows, agents…" autocomplete="off" spellcheck="false" />
+      <span class="kbd">⌘K</span>
+    </div>
+    <div class="cmdk-hint"><span class="spark">✦</span> Try: <em id="cmdRotate" style="font-style:normal;color:var(--ink-dim)">"refactor a React hook"</em></div>
+  </div>
+
+  <div class="pills reveal" role="tablist">
+    <button class="pill active">All</button>
+    <button class="pill">Engineering</button>
+    <button class="pill">Agents</button>
+    <button class="pill">Writing</button>
+    <button class="pill">Reasoning</button>
+    <button class="pill">Vision</button>
+    <button class="pill">Workflows</button>
+    <button class="pill">Security</button>
+    <button class="pill">Data</button>
+  </div>
+
+  <div class="float-stage" aria-hidden="true">
+    <div class="orb"></div>
+    <div class="float-card fc-1">
+      <div class="fc-head"><span class="fc-tag">/agent</span> Code reviewer</div>
+      <div class="fc-body">Reviews diffs for security, performance, and style across your repo.</div>
+    </div>
+    <div class="float-card fc-2">
+      <div class="fc-head"><span class="fc-tag">/prompt</span> RAG distiller</div>
+      <div class="fc-body">Compresses sources into context-window-aware grounding.</div>
+    </div>
+    <div class="float-card fc-3">
+      <div class="fc-head"><span class="fc-tag">/flow</span> Refactor pass</div>
+      <div class="fc-body">Multi-step plan → diff → typecheck → commit, fully audited.</div>
+    </div>
+    <div class="float-card fc-4">
+      <div class="fc-head"><span class="fc-tag">/system</span> Senior engineer</div>
+      <div class="fc-body">A measured, terse persona tuned for production code.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="library">
+  <div class="section-head reveal">
+    <span class="eyebrow"><span class="dot" style="background:#a855f7;box-shadow:0 0 12px #a855f7"></span> Featured prompts</span>
+    <h2>Production-grade prompts, <span class="serif">curated</span></h2>
+    <p>Battle-tested across reviews, agents, and workflows — versioned, searchable, and ready to ship.</p>
+  </div>
+
+  <div class="cards">
+    <article class="card reveal">
+      <div class="card-head">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <span class="card-tag">engineering</span>
+      </div>
+      <h3>Adversarial code reviewer</h3>
+      <p>Flags hallucinated APIs, security blind spots, and stale patterns in any pull request — 7-pass deep audit.</p>
+      <div class="card-meta">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg> 4.9k</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 312</span>
+        <span>v2.1</span>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-head">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+        <span class="card-tag">agents</span>
+      </div>
+      <h3>Autonomous research lead</h3>
+      <p>Plans, searches, summarizes, and writes a decision memo — with citations, dissent, and confidence scores.</p>
+      <div class="card-meta">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg> 3.2k</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 184</span>
+        <span>v1.4</span>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-head">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <span class="card-tag">writing</span>
+      </div>
+      <h3>Doc-grade summarizer</h3>
+      <p>Condenses long-form docs into structured briefs — preserves intent, code blocks, and source paths.</p>
+      <div class="card-meta">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg> 2.7k</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 96</span>
+        <span>v3.0</span>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-head">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div>
+        <span class="card-tag">reasoning</span>
+      </div>
+      <h3>Chain-of-thought planner</h3>
+      <p>Decomposes ambiguous tasks into ordered, testable steps with cost-per-token guardrails.</p>
+      <div class="card-meta">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg> 5.1k</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 410</span>
+        <span>v2.3</span>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-head">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+        <span class="card-tag">vision</span>
+      </div>
+      <h3>UI screenshot critique</h3>
+      <p>Audits design screenshots against accessibility, hierarchy, and brand-system rules — outputs diff suggestions.</p>
+      <div class="card-meta">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg> 1.8k</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 67</span>
+        <span>v1.0</span>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-head">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <span class="card-tag">security</span>
+      </div>
+      <h3>Threat model & OWASP scan</h3>
+      <p>STRIDE-style threat enumeration plus Top-10 audit pass with file-level remediation steps.</p>
+      <div class="card-meta">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 9l7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg> 3.6k</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 248</span>
+        <span>v2.0</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="dashboard">
+  <div class="section-head reveal">
+    <span class="eyebrow"><span class="dot" style="background:#ec4899;box-shadow:0 0 12px #ec4899"></span> Workspace</span>
+    <h2>One <span class="serif">command center</span> for every prompt</h2>
+    <p>Version, fork, and deploy prompts from the terminal or the dashboard — with full audit trails.</p>
+  </div>
+
+  <div class="dash reveal">
+    <div class="dash-bar">
+      <div class="dot-tl"><span></span><span></span><span></span></div>
+      <div class="dash-url">paste.dev/workspace/devcraftxcoder</div>
+    </div>
+    <div class="dash-body">
+      <aside class="dash-side">
+        <h4>Workspace</h4>
+        <div class="dash-nav">
+          <a class="on" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Library</a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 10v6m11-11h-6M7 12H1m17.07-7.07-4.24 4.24M9.17 14.83l-4.24 4.24m0-14.14 4.24 4.24m5.66 5.66 4.24 4.24"/></svg> Agents</a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Runs</a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Telemetry</a>
+        </div>
+        <h4>Collections</h4>
+        <div class="dash-nav">
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Engineering</a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Security</a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg> Workflows</a>
+        </div>
+      </aside>
+      <main class="dash-main">
+        <div class="crumb">workspace › library › <span style="color:#d8b4fe">adversarial-code-reviewer</span></div>
+        <h3 style="margin-bottom:14px">Adversarial code reviewer · v2.1</h3>
+        <div class="terminal" aria-hidden="true">
+          <div><span class="prm">~/paste $</span> <span class="cmd">paste deploy adversarial-code-reviewer --target=staging</span></div>
+          <div class="out">→ resolving prompt graph (3 nodes, 2 tools)</div>
+          <div class="out">→ injecting workspace context (1.4 MB)</div>
+          <div class="out">→ versioning v2.1 → v2.1.1-staging</div>
+          <div class="out">→ uploading artifacts...</div>
+          <div><span class="ok">✓ deployed</span> <span class="out">paste.dev/r/devcraftxcoder/adv-cr@2.1.1</span></div>
+          <div><span class="prm">~/paste $</span> <span class="cmd cursor-blink" id="termType"></span></div>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
+
+<section class="trusted">
+  <div class="label">Trusted by builders shipping with</div>
+  <div class="logos">
+    <span class="logo">Vercel</span>
+    <span class="logo"><span class="serif">Linear</span></span>
+    <span class="logo"><span class="mono">Raycast</span></span>
+    <span class="logo">OpenAI</span>
+    <span class="logo">Anthropic</span>
+    <span class="logo"><span class="mono">Cloudflare</span></span>
+    <span class="logo">Supabase</span>
+  </div>
+</section>
+
+<section class="final" id="start">
+  <h2 class="reveal"><span class="grad">Stop pasting.</span><br/><span class="serif">Start shipping.</span></h2>
+  <p class="reveal">A premium workspace for the prompts, agents, and workflows behind your best AI products.</p>
+  <div class="hero-cta reveal" style="margin-bottom:0">
+    <a href="#" class="btn btn-primary btn-lg">Start Building Free</a>
+    <a href="https://github.com/DevCraftXCoder" target="_blank" rel="noopener" class="btn btn-secondary btn-lg">View on GitHub</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-brand">
+    <b>Paste</b> · AI Prompt Workspace · by DevCraftXCoder
+  </div>
+  <a class="gh" href="https://github.com/DevCraftXCoder" target="_blank" rel="noopener" aria-label="DevCraftXCoder on GitHub">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.92.58.11.79-.25.79-.55v-1.93c-3.2.7-3.87-1.54-3.87-1.54-.52-1.34-1.27-1.7-1.27-1.7-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.76 2.69 1.25 3.34.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.16 1.18.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.49 3.16-1.18 3.16-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.08 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.13v3.16c0 .31.21.67.8.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+  </a>
+</footer>
+
+<script>
+/* ---------- Cursor glow ---------- */
+(() => {
+  const el = document.getElementById('cursorGlow');
+  if (!el || matchMedia('(hover:none)').matches) return;
+  let tx = 0, ty = 0, x = 0, y = 0;
+  addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+  (function loop(){
+    x += (tx - x) * 0.12;
+    y += (ty - y) * 0.12;
+    el.style.transform = `translate(${x}px, ${y}px) translate(-50%,-50%)`;
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ---------- Particles ---------- */
+(() => {
+  const c = document.getElementById('particles');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let w, h, dpr, parts;
+  const COUNT = matchMedia('(max-width:760px)').matches ? 36 : 80;
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = c.width = innerWidth * dpr;
+    h = c.height = innerHeight * dpr;
+    c.style.width = innerWidth + 'px';
+    c.style.height = innerHeight + 'px';
+    parts = Array.from({length:COUNT}, () => ({
+      x: Math.random()*w, y: Math.random()*h,
+      vx: (Math.random()-.5)*0.18*dpr, vy: (Math.random()-.5)*0.18*dpr,
+      r: (Math.random()*1.4+0.4)*dpr,
+      hue: Math.random() < 0.5 ? 270 : 320,
+      a: Math.random()*0.5 + 0.2
+    }));
+  }
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    for (const p of parts){
+      p.x += p.vx; p.y += p.vy;
+      if (p.x<0||p.x>w) p.vx*=-1;
+      if (p.y<0||p.y>h) p.vy*=-1;
+      ctx.beginPath();
+      ctx.fillStyle = `hsla(${p.hue},85%,70%,${p.a})`;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  addEventListener('resize', resize, {passive:true});
+  resize(); frame();
+})();
+
+/* ---------- Search rotating placeholder ---------- */
+(() => {
+  const el = document.getElementById('cmdRotate');
+  if (!el) return;
+  const examples = [
+    '"refactor a React hook"',
+    '"audit this Dockerfile for OWASP"',
+    '"write a senior eng commit message"',
+    '"summarize a 40-page RFC"',
+    '"build a multi-agent research flow"',
+    '"convert SQL to Prisma schema"',
+  ];
+  let i = 0;
+  setInterval(() => {
+    i = (i+1) % examples.length;
+    el.style.opacity = '0';
+    setTimeout(() => { el.textContent = examples[i]; el.style.opacity = '1'; }, 220);
+  }, 2600);
+  el.style.transition = 'opacity .22s';
+})();
+
+/* ---------- ⌘K focus ---------- */
+addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){
+    e.preventDefault();
+    document.getElementById('cmdInput')?.focus();
+  }
+});
+
+/* ---------- Pills ---------- */
+document.querySelectorAll('.pill').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+  });
+});
+
+/* ---------- Card spotlight ---------- */
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
+});
+
+/* ---------- Reveal on scroll ---------- */
+(() => {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.08, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+
+/* ---------- Terminal typing ---------- */
+(() => {
+  const el = document.getElementById('termType');
+  if (!el) return;
+  const lines = [
+    'paste search "rag distiller"',
+    'paste fork adv-cr@2.1 → my-team/adv-cr',
+    'paste run threat-model --target=./src',
+    'paste publish my-team/adv-cr@2.1.2',
+  ];
+  let li = 0, ci = 0, deleting = false;
+  function tick(){
+    const cur = lines[li];
+    if (!deleting){
+      ci++;
+      el.textContent = cur.slice(0, ci);
+      if (ci === cur.length){ deleting = true; setTimeout(tick, 1400); return; }
+    } else {
+      ci--;
+      el.textContent = cur.slice(0, ci);
+      if (ci === 0){ deleting = false; li = (li+1) % lines.length; }
+    }
+    setTimeout(tick, deleting ? 28 : 55 + Math.random()*40);
+  }
+  setTimeout(tick, 1200);
+})();
+</script>
+</body>
+</html>
