@@ -227,4 +227,4 @@ Test each prompt against at least one AI client before submitting. Prompts that 
 
 ## License
 
-MIT License. Copyright 2026 Frxncois. See [LICENSE](LICENSE).
+MIT License. Copyright 2026 DevCraftXCoder. See [LICENSE](LICENSE).
