@@ -120,16 +120,34 @@ select{font-family:inherit}
 }
 .model-btn.active{background:var(--red);color:#fff;border-radius:20px}
 
-.sort-select{
-  padding:6px 32px 6px 12px;font-size:11px;font-weight:500;letter-spacing:0.3px;
+.sort-dropdown{position:relative}
+.sort-trigger{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 12px 6px 14px;font-size:11px;font-weight:600;letter-spacing:0.3px;
   background:rgba(255,255,255,0.04);border:1px solid var(--border);
-  border-radius:20px;color:var(--txt);
-  appearance:none;-webkit-appearance:none;cursor:pointer;
-  outline:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 12px center;
+  border-radius:20px;color:var(--txt);cursor:pointer;
+  transition:border-color 0.18s,background 0.18s;white-space:nowrap;
 }
-.sort-select:focus{border-color:var(--red-border)}
+.sort-trigger:hover{border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.07)}
+.sort-trigger.open{border-color:var(--red-border);background:rgba(255,255,255,0.06)}
+.sort-trigger svg{flex-shrink:0;transition:transform 0.2s;color:rgba(255,255,255,0.35)}
+.sort-trigger.open svg{transform:rotate(180deg)}
+.sort-menu{
+  position:absolute;top:calc(100% + 6px);right:0;z-index:200;
+  background:#111114;border:1px solid rgba(255,255,255,0.1);
+  border-radius:10px;padding:4px;min-width:140px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.7);
+  display:none;
+}
+.sort-menu.open{display:block}
+.sort-opt{
+  display:block;width:100%;text-align:left;
+  padding:8px 12px;font-size:12px;font-weight:500;
+  color:rgba(255,255,255,0.55);border-radius:6px;
+  transition:background 0.12s,color 0.12s;cursor:pointer;
+}
+.sort-opt:hover{background:rgba(255,255,255,0.07);color:#e8e8e8}
+.sort-opt.active{color:#e8e8e8;background:rgba(233,69,96,0.12)}
 
 .search-section{width:100%;max-width:560px;margin:0 auto}
 .search-wrap{position:relative}
@@ -431,12 +449,18 @@ select{font-family:inherit}
           <button class="model-btn active" data-mode="high">high</button>
           <button class="model-btn" data-mode="low">low</button>
         </div>
-        <select class="sort-select" id="sort-select">
-          <option value="default">Default</option>
-          <option value="az">A → Z</option>
-          <option value="za">Z → A</option>
-          <option value="stars">Starred first</option>
-        </select>
+        <div class="sort-dropdown" id="sort-dropdown">
+          <button class="sort-trigger" id="sort-trigger">
+            <span id="sort-label">Default</span>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <div class="sort-menu" id="sort-menu">
+            <button class="sort-opt active" data-value="default">Default</button>
+            <button class="sort-opt" data-value="az">A → Z</button>
+            <button class="sort-opt" data-value="za">Z → A</button>
+            <button class="sort-opt" data-value="stars">Starred first</button>
+          </div>
+        </div>
       </div>
 
       <div class="search-section">
@@ -753,9 +777,27 @@ document.querySelectorAll('.model-btn').forEach(b => b.addEventListener('click',
   document.querySelectorAll('.model-btn').forEach(x => x.classList.toggle('active', x === b));
 }));
 
-document.getElementById('sort-select').addEventListener('change', e => {
-  sortMode = e.target.value;
-  render();
+const sortTrigger = document.getElementById('sort-trigger');
+const sortMenu = document.getElementById('sort-menu');
+sortTrigger.addEventListener('click', e => {
+  e.stopPropagation();
+  sortTrigger.classList.toggle('open');
+  sortMenu.classList.toggle('open');
+});
+document.addEventListener('click', () => {
+  sortTrigger.classList.remove('open');
+  sortMenu.classList.remove('open');
+});
+document.querySelectorAll('.sort-opt').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    sortMode = btn.dataset.value;
+    document.querySelectorAll('.sort-opt').forEach(b => b.classList.toggle('active', b === btn));
+    document.getElementById('sort-label').textContent = btn.textContent;
+    sortTrigger.classList.remove('open');
+    sortMenu.classList.remove('open');
+    render();
+  });
 });
 
 document.getElementById('search-input').addEventListener('input', e => {
