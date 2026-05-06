@@ -18,6 +18,7 @@ body.has-prism-bg {
   pointer-events: none;
   overflow: hidden;
   contain: strict;
+  opacity: 0.35;
 }
 
 #prism-tint {
@@ -28,12 +29,12 @@ body.has-prism-bg {
   left: var(--prism-left, 0);
   z-index: -4;
   pointer-events: none;
-  /* Dark transparent overlay so content stays readable over the prism. */
+  /* Dark overlay — keeps prism subtle and content readable. */
   background:
     radial-gradient(ellipse at 50% 0%,
-      rgba(8, 8, 9, 0.35) 0%,
-      rgba(8, 8, 9, 0.78) 60%,
-      rgba(8, 8, 9, 0.92) 100%);
+      rgba(8, 8, 9, 0.65) 0%,
+      rgba(8, 8, 9, 0.88) 60%,
+      rgba(8, 8, 9, 0.97) 100%);
 }
 
 /* Library page: keep the left sidebar opaque so the prism does not show behind it. */
