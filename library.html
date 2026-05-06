@@ -359,8 +359,23 @@ select{font-family:inherit}
   #back-link{top:10px;right:10px}
 }
 </style>
+<link rel="stylesheet" href="public/prism-bg.css">
 </head>
-<body>
+<body class="has-prism-bg" style="--prism-left:220px">
+
+<div id="prism-bg"
+     data-animation-type="rotate"
+     data-time-scale="0.5"
+     data-height="3.5"
+     data-base-width="5.5"
+     data-scale="3.6"
+     data-hue-shift="0"
+     data-color-frequency="1"
+     data-noise="0.5"
+     data-glow="1"
+     data-suspend-when-offscreen="true"
+     aria-hidden="true"></div>
+<div id="prism-tint" aria-hidden="true"></div>
 
 <a id="back-link" href="index.html">← Intro</a>
 <div id="loading">
@@ -756,5 +771,6 @@ document.getElementById('load-more-btn').addEventListener('click', loadMore);
 
 load();
 </script>
+<script type="module" src="public/prism-bg.js"></script>
 </body>
 </html>

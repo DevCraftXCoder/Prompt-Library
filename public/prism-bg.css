@@ -1,0 +1,51 @@
+/* Prism animated background — shared across index.html and library.html.
+   Stacking: html bg -> #prism-bg (canvas, z:-5) -> #prism-tint (dark overlay, z:-4)
+   -> any existing decorative layers (z:-2/-1) -> body content. */
+
+body.has-prism-bg {
+  /* Body must be transparent so the prism canvas (negative z-index) is visible.
+     The <html> element keeps its solid bg as a paint-time fallback. */
+  background: transparent !important;
+}
+
+#prism-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: var(--prism-left, 0);
+  z-index: -5;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+}
+
+#prism-tint {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: var(--prism-left, 0);
+  z-index: -4;
+  pointer-events: none;
+  /* Dark transparent overlay so content stays readable over the prism. */
+  background:
+    radial-gradient(ellipse at 50% 0%,
+      rgba(8, 8, 9, 0.35) 0%,
+      rgba(8, 8, 9, 0.78) 60%,
+      rgba(8, 8, 9, 0.92) 100%);
+}
+
+/* Library page: keep the left sidebar opaque so the prism does not show behind it. */
+body.has-prism-bg #sidebar {
+  background: var(--bg, #080809);
+  position: sticky;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  /* Sidebar hides on mobile — let the prism span the full viewport. */
+  body.has-prism-bg {
+    --prism-left: 0 !important;
+  }
+}

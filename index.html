@@ -259,8 +259,22 @@ footer{padding:32px 28px;border-top:1px solid var(--line);display:flex;align-ite
 .reveal.in{opacity:1;transform:translateY(0)}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}}
 </style>
+<link rel="stylesheet" href="public/prism-bg.css">
 </head>
-<body>
+<body class="has-prism-bg">
+<div id="prism-bg"
+     data-animation-type="rotate"
+     data-time-scale="0.5"
+     data-height="3.5"
+     data-base-width="5.5"
+     data-scale="3.6"
+     data-hue-shift="0"
+     data-color-frequency="1"
+     data-noise="0.5"
+     data-glow="1"
+     data-suspend-when-offscreen="true"
+     aria-hidden="true"></div>
+<div id="prism-tint" aria-hidden="true"></div>
 <div class="bg-field"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
 <div class="grid-overlay"></div>
 <canvas id="ptx"></canvas>
@@ -543,5 +557,6 @@ document.querySelectorAll('.card').forEach(c=>{c.addEventListener('mousemove',e=
 /* Terminal typing */
 (()=>{const e=document.getElementById('tt');if(!e)return;const ln=['paste search "rag distiller"','paste fork adv-cr@2.1 → my-team/adv-cr','paste run threat-model --target=./src','paste publish my-team/adv-cr@2.1.2'];let li=0,ci=0,del=false;function tick(){const cur=ln[li];if(!del){ci++;e.textContent=cur.slice(0,ci);if(ci===cur.length){del=true;setTimeout(tick,1400);return;}}else{ci--;e.textContent=cur.slice(0,ci);if(ci===0){del=false;li=(li+1)%ln.length;}}setTimeout(tick,del?28:55+Math.random()*40);}setTimeout(tick,1200);})();
 </script>
+<script type="module" src="public/prism-bg.js"></script>
 </body>
 </html>
