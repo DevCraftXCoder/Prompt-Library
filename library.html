@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Library — Paste</title>
+<title>Prompt Library</title>
 <meta name="description" content="Browse 3,900+ production-ready prompts. Filter by section, domain, tier, and model. Copy with one click."/>
 <link rel="canonical" href="https://devcraftxcoder.github.io/Prompt-Library/library.html"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -89,80 +89,92 @@ select{font-family:inherit}
 
 /* ─── Dash Header ─────────────────────────────────────────────────────── */
 #dash-header{
-  padding:32px 32px 0;
+  padding:40px 32px 24px;
   display:flex;flex-direction:column;align-items:center;gap:0;
   border-bottom:1px solid var(--border-sub);
-  padding-bottom:20px;
+  background:linear-gradient(180deg,rgba(233,69,96,0.04) 0%,transparent 100%);
 }
 @keyframes pasteLogoFloat{
   0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-6px)}
+  50%{transform:translateY(-5px)}
 }
 #paste-logo-wrap{
-  animation:pasteLogoFloat 3s ease-in-out infinite;
-  margin-bottom:8px;
+  animation:pasteLogoFloat 4s ease-in-out infinite;
+  margin-bottom:12px;
 }
-#paste-logo-wrap svg{width:119px;height:119px}
-.dash-title{font-family:var(--font-head);font-size:22px;font-weight:700;letter-spacing:-0.3px;margin-bottom:4px}
-.dash-count{font-size:12px;font-family:var(--font-mono);color:var(--txt-dim);margin-bottom:16px}
+#paste-logo-wrap svg{width:160px;height:160px}
+.dash-count{font-size:11px;font-family:var(--font-mono);color:var(--txt-mute);margin-bottom:20px;letter-spacing:0.5px;text-transform:uppercase}
 
 .controls-row{
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;
-  margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
+  margin-bottom:16px;
 }
 .model-toggle{
-  display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;
-  font-size:12px;
+  display:flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;
+  background:rgba(255,255,255,0.03);
 }
 .model-btn{
-  padding:6px 14px;font-size:12px;font-weight:500;
-  transition:background 0.15s,color 0.15s;
+  padding:6px 18px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;
+  transition:background 0.18s,color 0.18s;
   color:var(--txt-dim);
 }
-.model-btn.active{background:var(--red);color:#fff}
+.model-btn.active{background:var(--red);color:#fff;border-radius:20px}
 
 .sort-select{
-  padding:6px 10px;font-size:12px;
+  padding:6px 32px 6px 12px;font-size:11px;font-weight:500;letter-spacing:0.3px;
   background:rgba(255,255,255,0.04);border:1px solid var(--border);
-  border-radius:8px;color:var(--txt);appearance:none;cursor:pointer;
+  border-radius:20px;color:var(--txt);
+  appearance:none;-webkit-appearance:none;cursor:pointer;
   outline:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
 }
 .sort-select:focus{border-color:var(--red-border)}
 
-.search-section{width:100%;max-width:520px;margin:0 auto}
+.search-section{width:100%;max-width:560px;margin:0 auto}
 .search-wrap{position:relative}
 .search-icon{
-  position:absolute;left:12px;top:50%;transform:translateY(-50%);
-  color:var(--txt-mute);pointer-events:none;font-size:14px;
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--txt-mute);pointer-events:none;font-size:13px;
 }
 #search-input{
-  width:100%;padding:10px 36px 10px 36px;
+  width:100%;padding:11px 40px 11px 40px;
   background:rgba(255,255,255,0.04);border:1px solid var(--border);
-  border-radius:10px;color:var(--txt);font-size:14px;outline:none;
-  transition:border-color 0.15s;
+  border-radius:24px;color:var(--txt);font-size:13px;outline:none;
+  transition:border-color 0.18s,background 0.18s,box-shadow 0.18s;
 }
-#search-input:focus{border-color:var(--red-border)}
+#search-input::placeholder{color:var(--txt-mute)}
+#search-input:focus{
+  border-color:var(--red-border);
+  background:rgba(255,255,255,0.06);
+  box-shadow:0 0 0 3px rgba(233,69,96,0.08);
+}
 #search-clear{
-  position:absolute;right:10px;top:50%;transform:translateY(-50%);
-  color:var(--txt-mute);font-size:18px;padding:4px;display:none;
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  color:var(--txt-mute);font-size:16px;padding:4px;display:none;
+  transition:color 0.15s;
 }
+#search-clear:hover{color:var(--txt-dim)}
 #search-clear.visible{display:block}
 
 /* Service filter pills */
 .service-row{
   display:flex;gap:6px;flex-wrap:wrap;justify-content:center;
-  margin-top:12px;
+  margin-top:14px;
 }
 .svc-pill{
-  padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;
+  padding:5px 16px;border-radius:20px;font-size:11px;font-weight:600;
+  letter-spacing:0.3px;
   border:1px solid var(--border);color:var(--txt-dim);
-  transition:all 0.15s;
+  background:rgba(255,255,255,0.02);
+  transition:all 0.18s;
 }
-.svc-pill:hover{border-color:rgba(255,255,255,0.2);color:var(--txt)}
+.svc-pill:hover{border-color:rgba(255,255,255,0.18);color:var(--txt);background:rgba(255,255,255,0.05)}
 .svc-pill.active{
-  background:rgba(233,69,96,0.15);
-  border-color:rgba(233,69,96,0.5);
+  background:rgba(233,69,96,0.12);
+  border-color:rgba(233,69,96,0.45);
   color:var(--red);
+  box-shadow:0 0 12px rgba(233,69,96,0.1);
 }
 
 /* ─── Content ─────────────────────────────────────────────────────────── */
@@ -194,9 +206,9 @@ select{font-family:inherit}
 /* Tier tabs */
 .tier-tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:1px solid var(--border-sub);overflow-x:auto}
 .tier-tab{
-  padding:8px 18px;font-size:13px;font-weight:500;color:var(--txt-dim);
+  padding:8px 20px;font-size:12px;font-weight:600;letter-spacing:0.2px;color:var(--txt-dim);
   border-bottom:2px solid transparent;white-space:nowrap;
-  transition:color 0.15s,border-color 0.15s;
+  transition:color 0.18s,border-color 0.18s;
   margin-bottom:-1px;
 }
 .tier-tab:hover{color:var(--txt)}
@@ -214,20 +226,21 @@ select{font-family:inherit}
   to{opacity:1;transform:translateY(0)}
 }
 .prompt-card{
-  background:rgba(255,255,255,0.03);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:14px;
+  background:rgba(255,255,255,0.025);
+  border:1px solid var(--border-sub);
+  border-radius:12px;
+  padding:16px;
   min-height:168px;
   display:flex;flex-direction:column;gap:8px;
   cursor:pointer;
-  transition:border-color 0.15s,transform 0.15s,box-shadow 0.15s;
-  animation:cardExpandIn 0.16s ease;
+  transition:border-color 0.18s,transform 0.18s,box-shadow 0.18s,background 0.18s;
+  animation:cardExpandIn 0.18s ease;
 }
 .prompt-card:hover{
-  border-color:rgba(233,69,96,0.35);
-  transform:scale(1.012);
-  box-shadow:0 8px 32px rgba(0,0,0,0.5),0 0 0 1px rgba(233,69,96,0.25);
+  border-color:rgba(233,69,96,0.3);
+  transform:translateY(-2px);
+  background:rgba(255,255,255,0.04);
+  box-shadow:0 12px 40px rgba(0,0,0,0.5),0 0 0 1px rgba(233,69,96,0.2);
 }
 .prompt-card.expanded{transform:none!important;border-color:rgba(233,69,96,0.4);box-shadow:0 4px 24px rgba(0,0,0,0.4)}
 
@@ -306,11 +319,13 @@ select{font-family:inherit}
 /* Pagination */
 #load-more-wrap{margin-top:32px;text-align:center;display:none}
 #load-more-btn{
-  padding:10px 28px;border-radius:8px;font-size:13px;font-weight:600;
+  padding:10px 32px;border-radius:24px;font-size:12px;font-weight:600;
+  letter-spacing:0.4px;text-transform:uppercase;
   border:1px solid var(--border);color:var(--txt-dim);
-  transition:all 0.15s;
+  background:rgba(255,255,255,0.03);
+  transition:all 0.18s;
 }
-#load-more-btn:hover{border-color:rgba(255,255,255,0.2);color:var(--txt)}
+#load-more-btn:hover{border-color:rgba(255,255,255,0.2);color:var(--txt);background:rgba(255,255,255,0.06)}
 
 /* Search result count */
 #result-count{
@@ -321,12 +336,12 @@ select{font-family:inherit}
 /* Back link */
 #back-link{
   position:fixed;top:16px;right:20px;z-index:100;
-  font-size:12px;color:var(--txt-dim);
-  background:rgba(8,8,9,0.85);backdrop-filter:blur(8px);
-  border:1px solid var(--border);border-radius:8px;
-  padding:6px 12px;transition:color 0.15s,border-color 0.15s;
+  font-size:11px;font-weight:500;letter-spacing:0.3px;color:var(--txt-mute);
+  background:rgba(8,8,9,0.9);backdrop-filter:blur(12px);
+  border:1px solid var(--border-sub);border-radius:20px;
+  padding:6px 14px;transition:color 0.18s,border-color 0.18s;
 }
-#back-link:hover{color:var(--txt);border-color:rgba(255,255,255,0.2)}
+#back-link:hover{color:var(--txt-dim);border-color:rgba(255,255,255,0.15)}
 
 /* Toast */
 #toast{
@@ -353,10 +368,11 @@ select{font-family:inherit}
 /* Responsive */
 @media(max-width:768px){
   #sidebar{display:none}
-  #dash-header{padding:24px 16px 16px}
+  #dash-header{padding:32px 16px 20px}
+  #paste-logo-wrap svg{width:128px;height:128px}
   #content{padding:16px 16px 48px}
   .prompt-card-grid{grid-template-columns:1fr}
-  #back-link{top:10px;right:10px}
+  #back-link{top:10px;right:10px;font-size:10px;padding:5px 12px}
 }
 </style>
 <link rel="stylesheet" href="public/prism-bg.css">
@@ -408,7 +424,6 @@ select{font-family:inherit}
           <rect x="80" y="51.5" width="8" height="2.5" rx="1.25" fill="#1B2235"/>
         </svg>
       </div>
-      <h1 class="dash-title">Paste</h1>
       <p class="dash-count" id="total-count">— prompts</p>
 
       <div class="controls-row">
