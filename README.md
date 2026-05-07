@@ -210,6 +210,16 @@ These prompts work across any domain and any AI client without modification.
 
 ---
 
+## Recent Additions
+
+- **Library website overhaul** — 7-phase UI redesign: cmdk search shell with ⌘K hotkey, prompt-type taxonomy tabs (/agent /flow /system /prompt), pill row unification, card metadata parity (stars/comments/version), featured prompts row with 6 curated entries
+- **Slash command badges** — `/command-handle` badges on card headers for direct Claude Code integration references
+- **Terminal mock** — Featured section terminal animation demonstrating prompt-to-output flow
+- **Footer CTA redesign** — "Stop pasting. Start shipping." — new conversion-focused footer
+- **Minimal custom scrollbar** — Replaced arrow-button scrollbar with a clean, minimal track
+
+---
+
 ## Contributing
 
 All contributions must follow the tier structure. Submit new prompts with:
