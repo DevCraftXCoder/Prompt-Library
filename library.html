@@ -340,6 +340,23 @@ select{font-family:inherit}
 .card-btn.primary:hover{background:rgba(233,69,96,0.2)}
 .card-btn.copied{background:rgba(40,200,100,0.1);border-color:rgba(40,200,100,0.4);color:#28c864}
 
+/* ─── Phase 6: featured row ──────────────────────────────────────────── */
+#featured-section{margin-bottom:32px}
+.featured-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;color:#888;margin-bottom:12px}
+.featured-title{font-family:var(--font-head,'Syne');font-size:20px;font-weight:700;margin-bottom:16px;color:#e8e8e8}
+.featured-title em{font-style:normal;opacity:.55;font-weight:400}
+.featured-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:24px}
+.featured-card{background:rgba(255,255,255,.03);border:1px solid rgba(233,69,96,.2);border-radius:12px;padding:16px;cursor:pointer;transition:border-color .2s,transform .15s}
+.featured-card:hover{border-color:rgba(233,69,96,.45);transform:translateY(-1px)}
+.featured-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.featured-card-icon{font-size:20px}
+.featured-card-tag{font-family:var(--font-mono-jb,monospace);font-size:10px;color:#e94560;background:rgba(233,69,96,.1);border:1px solid rgba(233,69,96,.2);border-radius:4px;padding:2px 7px;margin-left:auto}
+.featured-card h3{font-family:var(--font-head,'Syne');font-size:14px;font-weight:700;margin-bottom:6px}
+.featured-card p{font-size:12px;color:#888;line-height:1.5;margin-bottom:10px}
+.featured-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:#666;font-family:var(--font-mono-jb,monospace)}
+.featured-meta-star{color:#f59e0b}
+.feat-badge{display:inline-block;font-size:9px;background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.25);border-radius:3px;padding:1px 5px;margin-bottom:10px;font-family:var(--font-mono-jb,monospace);text-transform:uppercase;letter-spacing:.05em}
+
 /* ─── Phase 5: card metadata parity ─────────────────────────────────── */
 .card-meta-row{display:flex;align-items:center;gap:12px;font-size:11px;color:#666;font-family:var(--font-mono-jb,monospace);margin-top:6px}
 .cm-stat{display:inline-flex;align-items:center;gap:4px}
@@ -557,6 +574,12 @@ select{font-family:inherit}
         <button class="tier-tab" data-tier="paragraph">Paragraph</button>
       </div>
 
+      <div id="featured-section">
+        <div class="featured-eyebrow"><span class="lib-dot"></span> Featured prompts</div>
+        <h2 class="featured-title">Production-grade prompts, <em>curated</em></h2>
+        <div id="featured-grid" class="featured-card-grid"></div>
+      </div>
+
       <div id="card-grid" class="prompt-card-grid"></div>
       <div id="empty-state">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -607,6 +630,8 @@ async function load() {
     document.getElementById('loading').style.display = 'none';
     document.getElementById('root').style.display = 'flex';
     buildSidebar();
+    renderFeatured();
+    updateFeaturedVisibility();
     render();
   } catch(e) {
     document.getElementById('loading').innerHTML = '<span style="color:#e94560">Failed to load prompts.json</span>';
@@ -644,6 +669,7 @@ function setSection(sec) {
   document.getElementById('section-title-text').textContent = sec === 'all' ? 'All Prompts' : m.label;
   buildDomainPills();
   render();
+  updateFeaturedVisibility();
 }
 
 function buildDomainPills() {
@@ -812,6 +838,60 @@ function esc(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function fmtNum(n){return n>=1000?(n/1000).toFixed(1).replace('.0','')+'k':String(n)}
+
+// Phase 6: featured section
+function buildFeaturedCard(p) {
+  const div = document.createElement('div');
+  div.className = 'featured-card';
+  div.dataset.id = p.id;
+  const snippet = (p.prompt_short || p.prompt || '').slice(0, 120);
+  div.innerHTML = `
+    <div class="feat-badge">Featured</div>
+    <div class="featured-card-header">
+      <span class="featured-card-icon">${p.icon || '⚡'}</span>
+      <span class="featured-card-tag">/${p.type || 'prompt'}</span>
+    </div>
+    <h3>${esc(p.title)}</h3>
+    <p>${esc(snippet)}${snippet.length >= 120 ? '…' : ''}</p>
+    <div class="featured-meta">
+      <span class="featured-meta-star">★</span> ${fmtNum(p.stars || 0)}
+      <span>·</span> ${p.comments || 0} comments
+      <span>·</span> ${p.version || 'v1.0'}
+    </div>
+  `;
+  div.addEventListener('click', () => {
+    const text = p.prompt || '';
+    const final = modelMode === 'high' ? HIGH_PREAMBLE + text : text;
+    navigator.clipboard.writeText(final).then(() => {
+      showToast('Copied to clipboard');
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = final; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('Copied to clipboard');
+    });
+  });
+  return div;
+}
+
+function renderFeatured() {
+  const grid = document.getElementById('featured-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  const featured = allPrompts.filter(p => p.featured === true);
+  for (const p of featured) grid.appendChild(buildFeaturedCard(p));
+}
+
+function isAllFiltersDefault() {
+  return activeSection === 'all' && activeSvc === 'all' && !activeDomainPill && activeType === 'all' && activeTier === 'all' && activeDomain === 'all' && !query;
+}
+
+function updateFeaturedVisibility() {
+  const section = document.getElementById('featured-section');
+  if (!section) return;
+  section.style.display = isAllFiltersDefault() ? '' : 'none';
+}
 
 function toggleExpand(id, p, card, btn) {
   const desc = card.querySelector('.card-desc');
