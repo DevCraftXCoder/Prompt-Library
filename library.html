@@ -430,6 +430,15 @@ select{font-family:inherit}
 }
 @keyframes loadingPulse{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
 
+/* ─── Phase 7: footer CTA ────────────────────────────────────────────── */
+.lib-footer{margin-top:64px;padding:48px 24px;border-top:1px solid rgba(255,255,255,.06);text-align:center}
+.lib-footer-inner{max-width:600px;margin:0 auto}
+.lib-footer-headline{font-family:var(--font-head,'Syne');font-size:28px;font-weight:800;margin-bottom:10px}
+.lib-footer-headline em{font-style:normal;background:linear-gradient(135deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lib-footer-sub{font-size:14px;color:#888;max-width:480px;margin:0 auto 24px}
+.lib-footer-cta{display:inline-block;padding:10px 24px;background:rgba(233,69,96,.1);border:1px solid rgba(233,69,96,.3);border-radius:8px;color:#e94560;font-size:14px;transition:all .2s}
+.lib-footer-cta:hover{background:rgba(233,69,96,.18);border-color:rgba(233,69,96,.5)}
+
 /* Responsive */
 @media(max-width:768px){
   #sidebar{display:none}
@@ -588,6 +597,13 @@ select{font-family:inherit}
       <div id="load-more-wrap">
         <button id="load-more-btn">Load more</button>
       </div>
+      <footer class="lib-footer">
+        <div class="lib-footer-inner">
+          <p class="lib-footer-headline">Stop pasting. <em>Start shipping.</em></p>
+          <p class="lib-footer-sub">A curated workspace for the prompts, agents, and workflows behind your best AI products.</p>
+          <a href="index.html" class="lib-footer-cta">← Back to intro</a>
+        </div>
+      </footer>
     </div>
   </div>
 </div>
