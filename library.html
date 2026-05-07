@@ -506,6 +506,10 @@ select{font-family:inherit}
           <button class="svc-pill" data-svc="claude">Claude</button>
           <button class="svc-pill" data-svc="codex">Codex</button>
           <button class="svc-pill" data-svc="gemini">Gemini</button>
+          <button class="svc-pill" data-domain="Engineering">Engineering</button>
+          <button class="svc-pill" data-domain="Agents">Agents</button>
+          <button class="svc-pill" data-domain="Security">Security</button>
+          <button class="svc-pill" data-domain="Data">Data</button>
         </div>
       </div>
     </header>
@@ -553,6 +557,7 @@ let activeSection = 'all';
 let activeDomain = 'all';
 let activeTier = 'all';
 let activeSvc = 'all';
+let activeDomainPill = null; // Phase 3: top-level domain pill (Engineering/Agents/Security/Data)
 let sortMode = 'default';
 let query = '';
 let stars = JSON.parse(localStorage.getItem('paste-stars') || '{}');
@@ -646,12 +651,30 @@ function refreshDomainPills() {
   });
 }
 
+const DOMAIN_PILL_MAP = {
+  'Engineering': ['Infrastructure','Dev & AI','Dev Experience','Internal Tools','Package Management','Dependencies','Environments','Configuration'],
+  'Agents': null, // special: type === 'agent'
+  'Security': ['Security','Auth & Authz','Compliance','Risk Management','Governance','Secrets Management'],
+  'Data': ['Data Engineering','Business Intelligence','Metrics & KPIs','Knowledge Base','Observability','Monitoring','Logging'],
+};
+
 function getFiltered() {
   let arr = allPrompts;
   if (activeSection !== 'all') arr = arr.filter(p => p.section === activeSection);
   if (activeDomain !== 'all') arr = arr.filter(p => p.domain === activeDomain);
   if (activeTier !== 'all') arr = arr.filter(p => p.tier === activeTier);
   if (activeSvc !== 'all') arr = arr.filter(p => (p.service || 'claude') === activeSvc);
+  // Phase 3: top-level domain pill filter
+  if (activeDomainPill) {
+    if (activeDomainPill === 'Agents') {
+      arr = arr.filter(p => p.type === 'agent');
+    } else {
+      const domains = DOMAIN_PILL_MAP[activeDomainPill] || [];
+      arr = arr.filter(p => domains.some(d => (p.domain || '').toLowerCase().includes(d.toLowerCase())));
+    }
+  }
+  // Phase 4: type filter
+  if (activeType !== 'all') arr = arr.filter(p => (p.type || 'prompt') === activeType);
   if (query) {
     const q = query.toLowerCase();
     arr = arr.filter(p =>
@@ -876,9 +899,29 @@ document.addEventListener('keydown', e => {
 })();
 
 document.querySelectorAll('.svc-pill').forEach(b => b.addEventListener('click', () => {
-  activeSvc = b.dataset.svc;
-  document.querySelectorAll('.svc-pill').forEach(x => x.classList.toggle('active', x === b));
+  if (b.dataset.domain) {
+    // Phase 3: domain pill clicked
+    const wasActive = b.classList.contains('active');
+    document.querySelectorAll('.svc-pill').forEach(x => x.classList.remove('active'));
+    if (wasActive) {
+      // Deactivate — back to All
+      activeDomainPill = null;
+      activeSvc = 'all';
+      document.querySelector('.svc-pill[data-svc="all"]')?.classList.add('active');
+    } else {
+      activeDomainPill = b.dataset.domain;
+      activeSvc = 'all';
+      b.classList.add('active');
+    }
+  } else {
+    // Service pill clicked
+    activeSvc = b.dataset.svc;
+    activeDomainPill = null;
+    document.querySelectorAll('.svc-pill').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+  }
   render();
+  updateFeaturedVisibility();
 }));
 
 document.querySelectorAll('.tier-tab').forEach(b => b.addEventListener('click', () => {
