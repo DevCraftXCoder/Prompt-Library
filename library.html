@@ -439,6 +439,15 @@ select{font-family:inherit}
 .lib-footer-cta{display:inline-block;padding:10px 24px;background:rgba(233,69,96,.1);border:1px solid rgba(233,69,96,.3);border-radius:8px;color:#e94560;font-size:14px;transition:all .2s}
 .lib-footer-cta:hover{background:rgba(233,69,96,.18);border-color:rgba(233,69,96,.5)}
 
+.card-command-handle{font-family:var(--font-mono-jb,'JetBrains Mono',monospace);font-size:10px;color:#555;padding:3px 8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:4px;margin-top:6px;cursor:copy;transition:color .15s,border-color .15s;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-command-handle:hover{color:#aaa;border-color:rgba(255,255,255,.15)}
+
+.lib-terminal{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);border-radius:8px;font-family:var(--font-mono-jb,'JetBrains Mono',monospace);font-size:12px;margin-bottom:20px;max-width:100%;overflow:hidden}
+.lt-prompt{color:#555}
+.lt-cmd{color:#e8e8e8;transition:opacity .3s}
+.lt-cursor{color:#e94560;animation:blink .9s step-end infinite;margin-left:1px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
 /* Responsive */
 @media(max-width:768px){
   #sidebar{display:none}
@@ -586,6 +595,11 @@ select{font-family:inherit}
       <div id="featured-section">
         <div class="featured-eyebrow"><span class="lib-dot"></span> Featured prompts</div>
         <h2 class="featured-title">Production-grade prompts, <em>curated</em></h2>
+        <div class="lib-terminal" aria-hidden="true">
+          <span class="lt-prompt">~/paste $</span>
+          <span class="lt-cmd" id="lt-rotating-cmd">paste use featured-adversarial-code-reviewer</span>
+          <span class="lt-cursor">█</span>
+        </div>
         <div id="featured-grid" class="featured-card-grid"></div>
       </div>
 
@@ -824,6 +838,7 @@ function buildCard(p) {
         ${isLong ? `<button class="card-btn expand-btn" data-id="${p.id}">Expand</button>` : ''}
         <button class="card-btn primary copy-btn" data-id="${p.id}" data-text="${esc(text)}">Copy</button>
       </div>
+      <div class="card-command-handle" data-cmd="paste use ${p.id}" title="Click to copy command">/paste use ${esc(p.id)}</div>
     </div>
     <div class="card-meta-row">
       <span class="cm-stat"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 15 9l7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg> ${fmtNum(p.stars || 0)}</span>
@@ -1068,6 +1083,40 @@ document.querySelectorAll('.type-tab').forEach(b => b.addEventListener('click', 
 }));
 
 document.getElementById('load-more-btn').addEventListener('click', loadMore);
+
+// Command handle click-to-copy (event delegation on both grids)
+(function() {
+  function wireHandleGrid(gridId) {
+    document.getElementById(gridId)?.addEventListener('click', e => {
+      const handle = e.target.closest('.card-command-handle');
+      if (!handle) return;
+      const cmd = handle.dataset.cmd;
+      navigator.clipboard?.writeText(cmd).then(() => {
+        showToast('Command copied!');
+      }).catch(() => {
+        const r = document.createRange(); r.selectNode(handle);
+        window.getSelection()?.removeAllRanges(); window.getSelection()?.addRange(r);
+      });
+    });
+  }
+  wireHandleGrid('card-grid');
+  wireHandleGrid('featured-grid');
+})();
+
+// Terminal mock rotating command in featured section
+const featuredIds = ['featured-adversarial-code-reviewer','featured-autonomous-research-lead','featured-doc-grade-summarizer','featured-chain-of-thought-planner','featured-ui-screenshot-critique','featured-threat-model-owasp'];
+let ltIdx = 0;
+const ltEl = document.getElementById('lt-rotating-cmd');
+if (ltEl) {
+  setInterval(() => {
+    ltIdx = (ltIdx + 1) % featuredIds.length;
+    ltEl.style.opacity = '0';
+    setTimeout(() => {
+      ltEl.textContent = 'paste use ' + featuredIds[ltIdx];
+      ltEl.style.opacity = '1';
+    }, 300);
+  }, 3000);
+}
 
 load();
 </script>
