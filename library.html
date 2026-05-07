@@ -8,10 +8,11 @@
 <link rel="canonical" href="https://devcraftxcoder.github.io/Prompt-Library/library.html"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:#080809;color:#e8e8e8;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;height:100%}
+html,body{background:#080809;color:#e8e8e8;font-family:'DM Sans','Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;height:100%}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
 select{font-family:inherit}
@@ -28,13 +29,33 @@ select{font-family:inherit}
   --txt-dim:rgba(255,255,255,0.4);
   --txt-mute:rgba(255,255,255,0.25);
   --txt-ultra:rgba(255,255,255,0.2);
-  --font-head:'Space Grotesk',sans-serif;
-  --font-body:'Inter',sans-serif;
+  --font-head:'Syne','DM Sans',system-ui,sans-serif;
+  --font-body:'DM Sans','Inter',sans-serif;
   --font-mono:'JetBrains Mono',monospace;
+  --font-mono-jb:'JetBrains Mono',monospace;
+  --amber:#f59e0b;
+  --amber-glow:rgba(245,158,11,.45);
+  --ink-mute:#505050;
 }
 
+/* ─── Phase 1: bg blobs + grid overlay ──────────────────────────────── */
+.lib-bg-field{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.lib-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.065}
+.lb1{width:500px;height:500px;background:radial-gradient(circle,rgba(233,69,96,.9),transparent 70%);top:-100px;left:-100px}
+.lb2{width:600px;height:600px;background:radial-gradient(circle,rgba(245,158,11,.7),transparent 70%);bottom:-150px;right:-100px}
+.lb3{width:350px;height:350px;background:radial-gradient(circle,rgba(99,102,241,.8),transparent 70%);top:40%;left:50%;transform:translateX(-50%)}
+.lib-grid-overlay{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:48px 48px}
+
+/* ─── Phase 1: eyebrow chip ─────────────────────────────────────────── */
+.lib-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border:1px solid rgba(255,255,255,.08);border-radius:999px;font-size:11px;color:#888;margin-bottom:12px;}
+.lib-dot{width:5px;height:5px;border-radius:50%;background:var(--amber,#f59e0b);box-shadow:0 0 8px var(--amber,#f59e0b);animation:pulse 2s ease-in-out infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ─── Phase 1: title sub ─────────────────────────────────────────────── */
+.dash-title-sub{font-weight:400;opacity:.45;font-size:0.65em;letter-spacing:.02em}
+
 /* ─── Layout ──────────────────────────────────────────────────────────── */
-#root{display:flex;align-items:stretch;min-height:100vh}
+#root{display:flex;align-items:stretch;min-height:100vh;position:relative;z-index:1}
 
 /* ─── Sidebar ─────────────────────────────────────────────────────────── */
 #sidebar{
@@ -77,7 +98,7 @@ select{font-family:inherit}
 }
 .sidebar-label{font-size:13px;font-weight:500;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sidebar-count{
-  font-size:10px;font-family:var(--font-mono);
+  font-size:10px;font-family:var(--font-mono-jb);
   background:rgba(255,255,255,0.07);
   color:var(--txt-dim);
   border-radius:10px;padding:2px 6px;flex-shrink:0;
@@ -102,8 +123,9 @@ select{font-family:inherit}
   animation:pasteLogoFloat 4s ease-in-out infinite;
   margin-bottom:12px;
 }
-#paste-logo-wrap svg{width:160px;height:160px}
-.dash-count{font-size:11px;font-family:var(--font-mono);color:var(--txt-mute);margin-bottom:20px;letter-spacing:0.5px;text-transform:uppercase}
+#paste-logo-wrap svg{width:32px;height:32px}
+.dash-count{font-size:11px;font-family:var(--font-mono-jb);color:var(--txt-mute);margin-bottom:20px;letter-spacing:0.5px;text-transform:uppercase}
+.dash-title{font-family:var(--font-head);font-size:2rem;font-weight:800;margin-bottom:4px}
 
 .controls-row{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
@@ -293,7 +315,7 @@ select{font-family:inherit}
   display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;
   margin-top:auto;
 }
-.card-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
+.card-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0;font-family:var(--font-mono-jb)}
 .card-domain{
   font-size:10px;color:var(--txt-mute);font-family:var(--font-mono);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px;
@@ -387,7 +409,7 @@ select{font-family:inherit}
 @media(max-width:768px){
   #sidebar{display:none}
   #dash-header{padding:32px 16px 20px}
-  #paste-logo-wrap svg{width:128px;height:128px}
+  #paste-logo-wrap svg{width:28px;height:28px}
   #content{padding:16px 16px 48px}
   .prompt-card-grid{grid-template-columns:1fr}
   #back-link{top:10px;right:10px;font-size:10px;padding:5px 12px}
@@ -418,6 +440,13 @@ select{font-family:inherit}
 </div>
 <div id="toast"></div>
 
+<div class="lib-bg-field" aria-hidden="true">
+  <div class="lib-blob lb1"></div>
+  <div class="lib-blob lb2"></div>
+  <div class="lib-blob lb3"></div>
+</div>
+<div class="lib-grid-overlay" aria-hidden="true"></div>
+
 <div id="root" style="display:none">
   <!-- Sidebar -->
   <aside id="sidebar">
@@ -430,18 +459,26 @@ select{font-family:inherit}
     <!-- Dash header -->
     <header id="dash-header">
       <div id="paste-logo-wrap">
-        <svg viewBox="0 0 119 119" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="22" y="22" width="64" height="80" rx="7" fill="none" stroke="#1B2235" stroke-width="3.5"/>
-          <path d="M46 22 Q46 14 54 14 H66 Q74 14 74 22" fill="none" stroke="#1B2235" stroke-width="3.5" stroke-linecap="round"/>
-          <rect x="33" y="48" width="30" height="3" rx="1.5" fill="#ABABAB"/>
-          <rect x="33" y="57" width="22" height="3" rx="1.5" fill="#ABABAB"/>
-          <rect x="33" y="66" width="26" height="3" rx="1.5" fill="#ABABAB"/>
-          <circle cx="84" cy="35" r="16" fill="#F9A825"/>
-          <path d="M84 26 L84 34 M84 36 L84 36" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-          <rect x="79" y="48" width="10" height="2.5" rx="1.25" fill="#1B2235"/>
-          <rect x="80" y="51.5" width="8" height="2.5" rx="1.25" fill="#1B2235"/>
+        <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="16" width="36" height="44" rx="5" fill="#1a1a1a" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+          <rect x="22" y="10" width="12" height="9" rx="3" fill="#2a2a2a" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/>
+          <circle cx="44" cy="20" r="11" fill="url(#libBulbBg)"/>
+          <circle cx="44" cy="19" r="6.5" fill="url(#libBulbFill)" opacity=".9"/>
+          <path d="M41 25h6M42.5 27h3" stroke="rgba(255,255,255,.5)" stroke-width="1.2" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="libBulbBg" x1="33" y1="9" x2="55" y2="31" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#f59e0b"/>
+              <stop offset="1" stop-color="#f97316"/>
+            </linearGradient>
+            <radialGradient id="libBulbFill" cx="42%" cy="38%" r="58%">
+              <stop stop-color="#fef3c7"/>
+              <stop offset="1" stop-color="#f59e0b"/>
+            </radialGradient>
+          </defs>
         </svg>
       </div>
+      <div class="lib-eyebrow"><span class="lib-dot"></span> Open beta · v0.1 &nbsp;·&nbsp; <span id="total-count-eyebrow"></span> prompts</div>
+      <h1 class="dash-title">Paste <span class="dash-title-sub">Library</span></h1>
       <p class="dash-count" id="total-count">— prompts</p>
 
       <div class="controls-row">
@@ -540,6 +577,8 @@ async function load() {
     const r = await fetch('./prompts.json');
     allPrompts = await r.json();
     document.getElementById('total-count').textContent = `${allPrompts.length.toLocaleString()} prompts`;
+    const eyebrow = document.getElementById('total-count-eyebrow');
+    if (eyebrow) eyebrow.textContent = allPrompts.length.toLocaleString();
     document.getElementById('loading').style.display = 'none';
     document.getElementById('root').style.display = 'flex';
     buildSidebar();
