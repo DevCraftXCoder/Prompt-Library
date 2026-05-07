@@ -65,7 +65,12 @@ select{font-family:inherit}
   position:sticky;top:0;height:100vh;overflow-y:auto;
   display:flex;flex-direction:column;
   padding:20px 0 24px;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent;
 }
+#sidebar::-webkit-scrollbar{width:3px}
+#sidebar::-webkit-scrollbar-track{background:transparent}
+#sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
+#sidebar::-webkit-scrollbar-button{display:none}
 .sidebar-cat-header{
   font-size:9px;font-weight:700;letter-spacing:1.2px;
   color:var(--txt-ultra);text-transform:uppercase;
