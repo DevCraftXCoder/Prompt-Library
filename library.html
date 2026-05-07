@@ -340,6 +340,12 @@ select{font-family:inherit}
 .card-btn.primary:hover{background:rgba(233,69,96,0.2)}
 .card-btn.copied{background:rgba(40,200,100,0.1);border-color:rgba(40,200,100,0.4);color:#28c864}
 
+/* ─── Phase 5: card metadata parity ─────────────────────────────────── */
+.card-meta-row{display:flex;align-items:center;gap:12px;font-size:11px;color:#666;font-family:var(--font-mono-jb,monospace);margin-top:6px}
+.cm-stat{display:inline-flex;align-items:center;gap:4px}
+.cm-stat svg{opacity:.6}
+.cm-version{margin-left:auto;opacity:.5}
+
 /* ─── Phase 4: type taxonomy ─────────────────────────────────────────── */
 .card-type-tag{font-family:var(--font-mono-jb,monospace);font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.05);color:#888;border:1px solid rgba(255,255,255,.08)}
 .card-type-tag[data-type="agent"]{color:#818cf8;border-color:rgba(129,140,248,.25);background:rgba(129,140,248,.08)}
@@ -777,6 +783,11 @@ function buildCard(p) {
         <button class="card-btn primary copy-btn" data-id="${p.id}" data-text="${esc(text)}">Copy</button>
       </div>
     </div>
+    <div class="card-meta-row">
+      <span class="cm-stat"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 15 9l7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg> ${fmtNum(p.stars || 0)}</span>
+      <span class="cm-stat"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> ${p.comments || 0}</span>
+      <span class="cm-version">${p.version || 'v1.0'}</span>
+    </div>
   `;
 
   card.querySelector('.card-star').addEventListener('click', e => {
@@ -800,6 +811,7 @@ function buildCard(p) {
 function esc(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+function fmtNum(n){return n>=1000?(n/1000).toFixed(1).replace('.0','')+'k':String(n)}
 
 function toggleExpand(id, p, card, btn) {
   const desc = card.querySelector('.card-desc');
