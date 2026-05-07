@@ -354,13 +354,10 @@ select{font-family:inherit}
 .featured-card h3{font-family:var(--font-head,'Syne');font-size:14px;font-weight:700;margin-bottom:6px}
 .featured-card p{font-size:12px;color:#888;line-height:1.5;margin-bottom:10px}
 .featured-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:#666;font-family:var(--font-mono-jb,monospace)}
-.featured-meta-star{color:#f59e0b}
 .feat-badge{display:inline-block;font-size:9px;background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.25);border-radius:3px;padding:1px 5px;margin-bottom:10px;font-family:var(--font-mono-jb,monospace);text-transform:uppercase;letter-spacing:.05em}
 
 /* ─── Phase 5: card metadata parity ─────────────────────────────────── */
 .card-meta-row{display:flex;align-items:center;gap:12px;font-size:11px;color:#666;font-family:var(--font-mono-jb,monospace);margin-top:6px}
-.cm-stat{display:inline-flex;align-items:center;gap:4px}
-.cm-stat svg{opacity:.6}
 .cm-version{margin-left:auto;opacity:.5}
 
 /* ─── Phase 4: type taxonomy ─────────────────────────────────────────── */
@@ -841,8 +838,6 @@ function buildCard(p) {
       <div class="card-command-handle" data-cmd="paste use ${p.id}" title="Click to copy command">/paste use ${esc(p.id)}</div>
     </div>
     <div class="card-meta-row">
-      <span class="cm-stat"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 15 9l7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg> ${fmtNum(p.stars || 0)}</span>
-      <span class="cm-stat"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> ${p.comments || 0}</span>
       <span class="cm-version">${p.version || 'v1.0'}</span>
     </div>
   `;
@@ -885,9 +880,7 @@ function buildFeaturedCard(p) {
     <h3>${esc(p.title)}</h3>
     <p>${esc(snippet)}${snippet.length >= 120 ? '…' : ''}</p>
     <div class="featured-meta">
-      <span class="featured-meta-star">★</span> ${fmtNum(p.stars || 0)}
-      <span>·</span> ${p.comments || 0} comments
-      <span>·</span> ${p.version || 'v1.0'}
+      <span>${p.version || 'v1.0'}</span>
     </div>
   `;
   div.addEventListener('click', () => {
