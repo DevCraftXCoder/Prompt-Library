@@ -774,6 +774,12 @@ function getFiltered() {
       (p.domain || '').toLowerCase().includes(q)
     );
   }
+  const tierRank = { 'full': 4, 'quick': 3, 'combo': 3, 'paragraph': 1 };
+  if (modelMode === 'high') {
+    arr = [...arr].sort((a,b) => (tierRank[b.tier] || 0) - (tierRank[a.tier] || 0));
+  } else if (modelMode === 'low') {
+    arr = [...arr].sort((a,b) => (tierRank[a.tier] || 0) - (tierRank[b.tier] || 0));
+  }
   if (sortMode === 'az') arr = [...arr].sort((a,b) => (a.title||'').localeCompare(b.title||''));
   else if (sortMode === 'za') arr = [...arr].sort((a,b) => (b.title||'').localeCompare(a.title||''));
   else if (sortMode === 'hightolow') arr = [...arr].sort((a,b) => (stars[b.id]?1:0) - (stars[a.id]?1:0));
