@@ -546,6 +546,8 @@ select{font-family:inherit}
             <button class="sort-opt active" data-value="default">Default</button>
             <button class="sort-opt" data-value="az">A → Z</button>
             <button class="sort-opt" data-value="za">Z → A</button>
+            <button class="sort-opt" data-value="hightolow">High to Low</button>
+            <button class="sort-opt" data-value="lowtohigh">Low to High</button>
             <button class="sort-opt" data-value="stars">Starred first</button>
           </div>
         </div>
@@ -774,6 +776,8 @@ function getFiltered() {
   }
   if (sortMode === 'az') arr = [...arr].sort((a,b) => (a.title||'').localeCompare(b.title||''));
   else if (sortMode === 'za') arr = [...arr].sort((a,b) => (b.title||'').localeCompare(a.title||''));
+  else if (sortMode === 'hightolow') arr = [...arr].sort((a,b) => (stars[b.id]?1:0) - (stars[a.id]?1:0));
+  else if (sortMode === 'lowtohigh') arr = [...arr].sort((a,b) => (stars[a.id]?1:0) - (stars[b.id]?1:0));
   else if (sortMode === 'stars') arr = [...arr].sort((a,b) => (stars[b.id]?1:0) - (stars[a.id]?1:0));
   return arr;
 }
@@ -979,6 +983,7 @@ function showToast(msg) {
 document.querySelectorAll('.model-btn').forEach(b => b.addEventListener('click', () => {
   modelMode = b.dataset.mode;
   document.querySelectorAll('.model-btn').forEach(x => x.classList.toggle('active', x === b));
+  render();
 }));
 
 const sortTrigger = document.getElementById('sort-trigger');
