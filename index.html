@@ -8,7 +8,7 @@
 <meta name="description" content="Discover, organize, and deploy high-quality AI prompts, workflows, and developer systems in one intelligent workspace." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ─── [1] Color Scheme — amber/orange (matches logo lightbulb) ─── */
 :root{
@@ -28,7 +28,7 @@
   --radius:14px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--ink);font-family:'Geist',-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html,body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body{min-height:100vh;font-size:15px;line-height:1.55;letter-spacing:-.005em}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
@@ -61,7 +61,10 @@ canvas#ptx{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55}
 .brand-mark img{width:72px;height:72px;display:block;object-fit:contain;
   -webkit-mask-image:radial-gradient(ellipse 58% 60% at 46% 50%,#000 45%,transparent 78%);
   mask-image:radial-gradient(ellipse 58% 60% at 46% 50%,#000 45%,transparent 78%);
-  filter:drop-shadow(0 0 12px rgba(245,158,11,.6)) drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+  filter:drop-shadow(0 0 12px rgba(245,158,11,.6)) drop-shadow(0 4px 10px rgba(0,0,0,.5));
+  transition:filter .3s ease, transform .35s cubic-bezier(.22,1.4,.36,1)}
+.brand:hover .brand-mark img{transform:scale(1.08) rotate(-3deg);
+  filter:drop-shadow(0 0 22px rgba(251,191,36,.95)) drop-shadow(0 0 48px rgba(245,158,11,.55)) drop-shadow(0 6px 14px rgba(0,0,0,.55))}
 @media(max-width:640px){.brand-mark{width:46px;height:46px}.brand-mark img{width:60px;height:60px}}
 .brand-text{display:flex;flex-direction:column;line-height:1}
 .brand-name{font-size:15px;font-weight:600}
@@ -98,27 +101,33 @@ canvas#ptx{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55}
 @keyframes halopulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.75}50%{transform:translate(-50%,-50%) scale(1.14);opacity:1}}
 .paste-icon{position:relative;z-index:1;animation:logoFloat 5.5s ease-in-out infinite;cursor:pointer;
   filter:
-    drop-shadow(0 0 30px rgba(245,158,11,.75))
-    drop-shadow(0 0 80px rgba(249,115,22,.45))
-    drop-shadow(0 22px 44px rgba(0,0,0,.75));
-  transition:filter .4s}
-.paste-icon:hover{animation-play-state:paused;
+    drop-shadow(0 0 36px rgba(245,158,11,.8))
+    drop-shadow(0 0 96px rgba(249,115,22,.5))
+    drop-shadow(0 28px 56px rgba(0,0,0,.78));
+  transition:filter .45s ease, transform .45s cubic-bezier(.22,1.4,.36,1)}
+.paste-icon img{width:340px;height:340px;display:block;object-fit:contain;
+  -webkit-mask-image:radial-gradient(ellipse 60% 62% at 46% 50%,#000 50%,transparent 80%);
+          mask-image:radial-gradient(ellipse 60% 62% at 46% 50%,#000 50%,transparent 80%)}
+.paste-icon:hover{animation-play-state:paused;transform:scale(1.06) rotate(-1deg);
   filter:
-    drop-shadow(0 0 48px rgba(251,191,36,1))
-    drop-shadow(0 0 120px rgba(245,158,11,.7))
-    drop-shadow(0 28px 56px rgba(0,0,0,.85))}
-@keyframes logoFloat{0%,100%{transform:translateY(0) rotate(-.35deg)}50%{transform:translateY(-20px) rotate(.35deg)}}
-@media(max-width:640px){.hero-logo .h1{width:280px;height:280px}.hero-logo .h2{width:190px;height:190px}.paste-icon svg{width:160px;height:160px}}
+    drop-shadow(0 0 64px rgba(251,191,36,1))
+    drop-shadow(0 0 160px rgba(245,158,11,.85))
+    drop-shadow(0 36px 72px rgba(0,0,0,.9))}
+.hero-logo:hover .h1{opacity:1;transform:translate(-50%,-50%) scale(1.18)}
+.hero-logo:hover .h2{opacity:1;transform:translate(-50%,-50%) scale(1.22)}
+@keyframes logoFloat{0%,100%{transform:translateY(0) rotate(-.35deg)}50%{transform:translateY(-22px) rotate(.4deg)}}
+@media(max-width:640px){.hero-logo .h1{width:300px;height:300px}.hero-logo .h2{width:200px;height:200px}.paste-icon img{width:220px;height:220px}}
 
 .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--line-strong);border-radius:999px;
   background:rgba(255,255,255,.02);font-size:12px;color:var(--ink-dim);margin-bottom:28px;
   backdrop-filter:blur(8px)}
 .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.hero h1{font-size:clamp(36px,6.4vw,76px);line-height:1.02;font-weight:600;letter-spacing:-.035em;max-width:980px;margin:0 auto 24px}
+/* ─── Display headings → Fraunces (literary, library-grade) ─── */
+.hero h1{font-family:'Fraunces',serif;font-variation-settings:'opsz' 144,'SOFT' 30;font-size:clamp(36px,6.4vw,80px);line-height:1.02;font-weight:500;letter-spacing:-.035em;max-width:980px;margin:0 auto 24px}
 /* ─── [2] Gradient — white → amber ─── */
 .grad{background:linear-gradient(180deg,#fff 0%,#fde68a 48%,#f59e0b 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter-spacing:-.01em}
+.serif{font-family:'Fraunces',serif;font-style:italic;font-variation-settings:'opsz' 144,'SOFT' 50;font-weight:400;letter-spacing:-.012em}
 .hero p.lede{font-size:clamp(15px,1.5vw,18px);color:var(--ink-dim);max-width:620px;margin:0 auto 36px;line-height:1.6}
 .hero-cta{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:52px}
 .btn-lg{padding:13px 22px;font-size:14.5px;border-radius:12px}
@@ -135,7 +144,7 @@ canvas#ptx{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55}
 .cmdk-shell:focus-within .cmdk-icon{color:var(--amber)}
 .cmdk input{flex:1;background:transparent;border:0;outline:0;color:var(--ink);font-size:15.5px;font-family:inherit}
 .cmdk input::placeholder{color:var(--ink-mute)}
-.kbd{padding:4px 8px;border-radius:6px;font-family:'Geist Mono',monospace;font-size:11px;
+.kbd{padding:4px 8px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:11px;
   color:var(--ink-mute);background:rgba(255,255,255,.04);border:1px solid var(--line-strong)}
 .cmdk-hint{margin-top:10px;font-size:12px;color:var(--ink-mute);display:flex;align-items:center;justify-content:center;gap:8px}
 .spark{color:var(--amber);display:inline-block;animation:spark 2.4s ease-in-out infinite}
@@ -163,7 +172,7 @@ canvas#ptx{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55}
   backdrop-filter:blur(14px);box-shadow:0 24px 60px -20px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.04);
   font-size:12.5px;color:var(--ink-dim);animation:floaty 8s ease-in-out infinite}
 .float-card .fc-head{display:flex;align-items:center;gap:8px;color:var(--ink);font-size:12px;margin-bottom:8px;font-weight:500}
-.float-card .fc-tag{padding:2px 8px;border-radius:6px;font-size:10.5px;font-family:'Geist Mono',monospace;
+.float-card .fc-tag{padding:2px 8px;border-radius:6px;font-size:10.5px;font-family:'JetBrains Mono',monospace;
   background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.28)}
 .float-card .fc-body{color:var(--ink-mute);line-height:1.5;font-size:12px}
 @keyframes floaty{0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}50%{transform:translateY(-12px) rotate(var(--rot,0deg))}}
@@ -177,7 +186,7 @@ canvas#ptx{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55}
 .section{max-width:1280px;margin:0 auto;padding:96px 28px}
 .section-head{text-align:center;margin-bottom:48px}
 .section-head .eyebrow{margin-bottom:18px}
-.section-head h2{font-size:clamp(28px,3.6vw,44px);font-weight:600;letter-spacing:-.025em;line-height:1.1;margin-bottom:14px}
+.section-head h2{font-family:'Fraunces',serif;font-variation-settings:'opsz' 144,'SOFT' 30;font-size:clamp(28px,3.6vw,46px);font-weight:500;letter-spacing:-.025em;line-height:1.1;margin-bottom:14px}
 .section-head p{color:var(--ink-dim);max-width:580px;margin:0 auto;font-size:15.5px}
 
 /* ─── [7] Cards — amber hover ─── */
@@ -196,10 +205,10 @@ canvas#ptx{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55}
 .card-icon{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;
   background:linear-gradient(135deg,rgba(245,158,11,.18),rgba(249,115,22,.12));border:1px solid rgba(245,158,11,.25)}
 .card-icon svg{width:16px;height:16px;color:#fbbf24}
-.card-tag{font-family:'Geist Mono',monospace;font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em}
 .card h3{font-size:16px;font-weight:600;letter-spacing:-.015em;margin-bottom:8px}
 .card p{color:var(--ink-dim);font-size:13.5px;line-height:1.55;margin-bottom:18px}
-.card-meta{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--ink-mute);font-family:'Geist Mono',monospace}
+.card-meta{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--ink-mute);font-family:'JetBrains Mono',monospace}
 .card-meta span{display:inline-flex;align-items:center;gap:5px}
 .card-meta svg{width:12px;height:12px}
 
@@ -210,12 +219,12 @@ canvas#ptx{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55}
 .dash-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);background:rgba(0,0,0,.2)}
 .dot-tl{display:flex;gap:6px}
 .dot-tl span{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.08)}
-.dash-url{margin-left:14px;font-family:'Geist Mono',monospace;font-size:11.5px;color:var(--ink-mute);
+.dash-url{margin-left:14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-mute);
   padding:5px 12px;border-radius:6px;background:rgba(255,255,255,.025);border:1px solid var(--line);flex:1;max-width:340px}
 .dash-body{display:grid;grid-template-columns:200px 1fr;min-height:380px}
 @media(max-width:760px){.dash-body{grid-template-columns:1fr}.dash-side{display:none}}
 .dash-side{padding:18px 14px;border-right:1px solid var(--line);background:rgba(0,0,0,.15)}
-.dash-side h4{font-size:10.5px;font-family:'Geist Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin:14px 0 8px;font-weight:500}
+.dash-side h4{font-size:10.5px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin:14px 0 8px;font-weight:500}
 .dash-side h4:first-child{margin-top:0}
 .dash-nav{display:flex;flex-direction:column;gap:2px}
 .dash-nav a{padding:7px 10px;border-radius:7px;font-size:12.5px;color:var(--ink-dim);display:flex;align-items:center;gap:9px;transition:all .15s}
@@ -224,9 +233,9 @@ canvas#ptx{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55}
 .dash-nav svg{width:13px;height:13px;flex-shrink:0}
 .dash-main{padding:24px}
 .dash-main h3{font-size:18px;font-weight:600;letter-spacing:-.015em;margin-bottom:6px}
-.dash-main .crumb{font-size:12px;color:var(--ink-mute);font-family:'Geist Mono',monospace;margin-bottom:18px}
+.dash-main .crumb{font-size:12px;color:var(--ink-mute);font-family:'JetBrains Mono',monospace;margin-bottom:18px}
 /* ─── [9] Terminal — amber prompt ─── */
-.terminal{background:#060402;border:1px solid var(--line);border-radius:10px;padding:16px;font-family:'Geist Mono',monospace;font-size:12.5px;line-height:1.7}
+.terminal{background:#060402;border:1px solid var(--line);border-radius:10px;padding:16px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7}
 .terminal .prm{color:#f59e0b}
 .terminal .cmd{color:var(--ink)}
 .terminal .out{color:#606060}
@@ -236,21 +245,21 @@ canvas#ptx{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55}
 
 /* ─── Trusted ─── */
 .trusted{margin-top:80px;padding:44px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.trusted .label{text-align:center;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:24px}
+.trusted .label{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:24px}
 .logos{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:48px 56px;opacity:.55}
 .logos .logo{font-weight:600;font-size:17px;color:var(--ink-dim);transition:color .2s,opacity .2s;letter-spacing:-.01em}
 .logos .logo:hover{color:var(--ink);opacity:1}
-.logos .logo .mono{font-family:'Geist Mono',monospace;font-size:14px}
-.logos .logo .serif-f{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:20px}
+.logos .logo .mono{font-family:'JetBrains Mono',monospace;font-size:14px}
+.logos .logo .serif-f{font-family:'Fraunces',serif;font-style:italic;font-variation-settings:'opsz' 144,'SOFT' 50;font-weight:400;font-size:20px}
 
 /* ─── Final CTA ─── */
 .final{position:relative;text-align:center;padding:100px 28px;max-width:880px;margin:0 auto}
-.final h2{font-size:clamp(34px,5vw,60px);font-weight:600;letter-spacing:-.03em;line-height:1.05;margin-bottom:20px}
+.final h2{font-family:'Fraunces',serif;font-variation-settings:'opsz' 144,'SOFT' 30;font-size:clamp(34px,5vw,64px);font-weight:500;letter-spacing:-.03em;line-height:1.05;margin-bottom:20px}
 .final p{color:var(--ink-dim);max-width:520px;margin:0 auto 30px;font-size:15.5px}
 
 /* ─── [10] Footer — amber GitHub glow ─── */
 footer{padding:32px 28px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;max-width:1280px;margin:0 auto}
-.foot-brand{font-size:12.5px;color:var(--ink-mute);font-family:'Geist Mono',monospace}
+.foot-brand{font-size:12.5px;color:var(--ink-mute);font-family:'JetBrains Mono',monospace}
 .foot-brand b{color:var(--ink-dim);font-weight:500}
 .gh{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:10px;color:var(--ink-dim);
   background:rgba(255,255,255,.025);border:1px solid var(--line);transition:all .25s}
@@ -319,54 +328,7 @@ footer{padding:32px 28px;border-top:1px solid var(--line);display:flex;align-ite
     <span class="halo h1"></span>
     <span class="halo h2"></span>
     <div class="paste-icon" role="img" aria-label="Paste — clipboard with lightbulb">
-      <svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Shadow under clipboard -->
-        <ellipse cx="100" cy="205" rx="70" ry="8" fill="rgba(0,0,0,0.45)" filter="url(#sh)"/>
-        <!-- Clipboard board body (dark navy, white paper inset) -->
-        <rect x="24" y="42" width="132" height="158" rx="16" fill="#1e2a3a"/>
-        <rect x="30" y="60" width="120" height="134" rx="10" fill="rgba(255,255,255,0.96)"/>
-        <!-- Clip at top (dark navy) -->
-        <rect x="72" y="32" width="36" height="26" rx="8" fill="#1e2a3a"/>
-        <!-- Clip hole -->
-        <circle cx="90" cy="42" r="6" fill="#0f1620"/>
-        <!-- Folded corner (top-right of paper) -->
-        <path d="M150 60 L150 80 L130 60 Z" fill="rgba(245,158,11,0.25)"/>
-        <path d="M130 60 L150 80" stroke="rgba(245,158,11,0.5)" stroke-width="1" fill="none"/>
-        <!-- Document lines on paper -->
-        <rect x="42" y="88" width="72" height="7" rx="3.5" fill="#d1d5db"/>
-        <rect x="42" y="104" width="60" height="7" rx="3.5" fill="#e5e7eb"/>
-        <rect x="42" y="120" width="66" height="7" rx="3.5" fill="#e5e7eb"/>
-        <rect x="42" y="136" width="50" height="7" rx="3.5" fill="#f3f4f6"/>
-        <!-- Lightbulb badge circle (amber, overlapping lower-right) -->
-        <circle cx="156" cy="162" r="42" fill="#0a0a0a"/>
-        <circle cx="156" cy="162" r="38" fill="url(#bulbBg)"/>
-        <!-- Lightbulb body -->
-        <ellipse cx="156" cy="158" rx="16" ry="18" fill="url(#bulbFill)"/>
-        <!-- Lightbulb inner glow highlight -->
-        <ellipse cx="151" cy="152" rx="5" ry="7" fill="rgba(255,255,255,0.55)" transform="rotate(-15 151 152)"/>
-        <!-- Bulb neck / cap -->
-        <rect x="148" y="174" width="16" height="4" rx="2" fill="#1e2a3a"/>
-        <rect x="149" y="178" width="14" height="4" rx="2" fill="#1e2a3a"/>
-        <!-- Filament coil (white) -->
-        <path d="M151 165 Q153 160 156 163 Q159 166 161 161" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-        <!-- Shine dot -->
-        <circle cx="148" cy="150" r="3" fill="rgba(255,255,255,0.65)"/>
-        <!-- Badge ring highlight -->
-        <circle cx="156" cy="162" r="38" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-        <defs>
-          <filter id="sh"><feGaussianBlur stdDeviation="4"/></filter>
-          <linearGradient id="bulbBg" x1="118" y1="124" x2="194" y2="200" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#f59e0b"/>
-            <stop offset="55%" stop-color="#f97316"/>
-            <stop offset="100%" stop-color="#92400e"/>
-          </linearGradient>
-          <radialGradient id="bulbFill" cx="42%" cy="38%" r="58%">
-            <stop offset="0%" stop-color="#fde68a"/>
-            <stop offset="40%" stop-color="#f59e0b"/>
-            <stop offset="100%" stop-color="#d97706"/>
-          </radialGradient>
-        </defs>
-      </svg>
+      <img src="public/paste-icon.png" alt="Paste logo" draggable="false" width="340" height="340"/>
     </div>
   </div>
 

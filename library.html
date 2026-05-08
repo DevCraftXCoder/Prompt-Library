@@ -8,11 +8,10 @@
 <link rel="canonical" href="https://devcraftxcoder.github.io/Prompt-Library/library.html"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:#080809;color:#e8e8e8;font-family:'DM Sans','Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;height:100%}
+html,body{background:#080809;color:#e8e8e8;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;height:100%}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
 select{font-family:inherit}
@@ -29,8 +28,8 @@ select{font-family:inherit}
   --txt-dim:rgba(255,255,255,0.4);
   --txt-mute:rgba(255,255,255,0.25);
   --txt-ultra:rgba(255,255,255,0.2);
-  --font-head:'Syne','DM Sans',system-ui,sans-serif;
-  --font-body:'DM Sans','Inter',sans-serif;
+  --font-head:'Fraunces',Georgia,serif;
+  --font-body:'Inter',system-ui,sans-serif;
   --font-mono:'JetBrains Mono',monospace;
   --font-mono-jb:'JetBrains Mono',monospace;
   --amber:#f59e0b;
@@ -52,7 +51,7 @@ select{font-family:inherit}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
 /* ─── Phase 1: title sub ─────────────────────────────────────────────── */
-.dash-title-sub{font-weight:400;opacity:.45;font-size:0.65em;letter-spacing:.02em}
+.dash-title-sub{font-family:var(--font-head);font-style:italic;font-variation-settings:'opsz' 144,'SOFT' 60;font-weight:400;opacity:.55;font-size:0.7em;letter-spacing:.005em}
 
 /* ─── Layout ──────────────────────────────────────────────────────────── */
 #root{display:flex;align-items:stretch;min-height:100vh;position:relative;z-index:1}
@@ -121,16 +120,38 @@ select{font-family:inherit}
   background:linear-gradient(180deg,rgba(233,69,96,0.04) 0%,transparent 100%);
 }
 @keyframes pasteLogoFloat{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-5px)}
+  0%,100%{transform:translateY(0) rotate(-.4deg)}
+  50%{transform:translateY(-12px) rotate(.4deg)}
 }
 #paste-logo-wrap{
-  animation:pasteLogoFloat 4s ease-in-out infinite;
-  margin-bottom:12px;
+  position:relative;display:block;
+  animation:pasteLogoFloat 5s ease-in-out infinite;
+  margin-bottom:18px;
+  cursor:pointer;
+  filter:
+    drop-shadow(0 0 28px rgba(245,158,11,.7))
+    drop-shadow(0 0 72px rgba(249,115,22,.4))
+    drop-shadow(0 18px 36px rgba(0,0,0,.7));
+  transition:filter .4s ease, transform .45s cubic-bezier(.22,1.4,.36,1);
 }
-#paste-logo-wrap svg{width:32px;height:32px}
+#paste-logo-wrap::before{
+  content:"";position:absolute;left:50%;top:50%;width:340px;height:340px;
+  border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;
+  background:radial-gradient(circle,rgba(245,158,11,.45) 0%,rgba(249,115,22,.15) 45%,transparent 72%);
+  filter:blur(50px);opacity:.85;z-index:-1;
+  animation:libHaloPulse 5.5s ease-in-out infinite;
+}
+@keyframes libHaloPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.7}50%{transform:translate(-50%,-50%) scale(1.18);opacity:1}}
+#paste-logo-wrap img{width:160px;height:160px;display:block;object-fit:contain;
+  -webkit-mask-image:radial-gradient(ellipse 60% 62% at 46% 50%,#000 50%,transparent 80%);
+          mask-image:radial-gradient(ellipse 60% 62% at 46% 50%,#000 50%,transparent 80%)}
+#paste-logo-wrap:hover{animation-play-state:paused;transform:scale(1.07) rotate(-1deg);
+  filter:
+    drop-shadow(0 0 56px rgba(251,191,36,1))
+    drop-shadow(0 0 140px rgba(245,158,11,.75))
+    drop-shadow(0 28px 56px rgba(0,0,0,.85))}
 .dash-count{font-size:11px;font-family:var(--font-mono-jb);color:var(--txt-mute);margin-bottom:20px;letter-spacing:0.5px;text-transform:uppercase}
-.dash-title{font-family:var(--font-head);font-size:2rem;font-weight:800;margin-bottom:4px}
+.dash-title{font-family:var(--font-head);font-variation-settings:'opsz' 144,'SOFT' 30;font-size:2.5rem;font-weight:500;letter-spacing:-.025em;margin-bottom:4px}
 
 .controls-row{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
@@ -221,7 +242,7 @@ select{font-family:inherit}
   display:flex;align-items:center;justify-content:space-between;
   margin-bottom:14px;flex-wrap:wrap;gap:8px;
 }
-.section-title{font-family:var(--font-head);font-size:17px;font-weight:700}
+.section-title{font-family:var(--font-head);font-variation-settings:'opsz' 144,'SOFT' 30;font-size:19px;font-weight:500;letter-spacing:-.01em}
 .section-meta{font-size:12px;font-family:var(--font-mono);color:var(--txt-dim)}
 
 .domain-pills{
@@ -348,15 +369,15 @@ select{font-family:inherit}
 /* ─── Phase 6: featured row ──────────────────────────────────────────── */
 #featured-section{margin-bottom:32px}
 .featured-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;color:#888;margin-bottom:12px}
-.featured-title{font-family:var(--font-head,'Syne');font-size:20px;font-weight:700;margin-bottom:16px;color:#e8e8e8}
-.featured-title em{font-style:normal;opacity:.55;font-weight:400}
+.featured-title{font-family:var(--font-head);font-variation-settings:'opsz' 144,'SOFT' 30;font-size:24px;font-weight:500;letter-spacing:-.018em;margin-bottom:16px;color:#e8e8e8}
+.featured-title em{font-family:var(--font-head);font-style:italic;font-variation-settings:'opsz' 144,'SOFT' 60;opacity:.65;font-weight:400}
 .featured-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:24px}
 .featured-card{background:rgba(255,255,255,.03);border:1px solid rgba(233,69,96,.2);border-radius:12px;padding:16px;cursor:pointer;transition:border-color .2s,transform .15s}
 .featured-card:hover{border-color:rgba(233,69,96,.45);transform:translateY(-1px)}
 .featured-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .featured-card-icon{font-size:20px}
 .featured-card-tag{font-family:var(--font-mono-jb,monospace);font-size:10px;color:#e94560;background:rgba(233,69,96,.1);border:1px solid rgba(233,69,96,.2);border-radius:4px;padding:2px 7px;margin-left:auto}
-.featured-card h3{font-family:var(--font-head,'Syne');font-size:14px;font-weight:700;margin-bottom:6px}
+.featured-card h3{font-family:var(--font-body);font-size:14px;font-weight:700;margin-bottom:6px}
 .featured-card p{font-size:12px;color:#888;line-height:1.5;margin-bottom:10px}
 .featured-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:#666;font-family:var(--font-mono-jb,monospace)}
 .feat-badge{display:inline-block;font-size:9px;background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.25);border-radius:3px;padding:1px 5px;margin-bottom:10px;font-family:var(--font-mono-jb,monospace);text-transform:uppercase;letter-spacing:.05em}
@@ -435,8 +456,8 @@ select{font-family:inherit}
 /* ─── Phase 7: footer CTA ────────────────────────────────────────────── */
 .lib-footer{margin-top:64px;padding:48px 24px;border-top:1px solid rgba(255,255,255,.06);text-align:center}
 .lib-footer-inner{max-width:600px;margin:0 auto}
-.lib-footer-headline{font-family:var(--font-head,'Syne');font-size:28px;font-weight:800;margin-bottom:10px}
-.lib-footer-headline em{font-style:normal;background:linear-gradient(135deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lib-footer-headline{font-family:var(--font-head);font-variation-settings:'opsz' 144,'SOFT' 30;font-size:34px;font-weight:500;letter-spacing:-.025em;margin-bottom:10px}
+.lib-footer-headline em{font-family:var(--font-head);font-style:italic;font-variation-settings:'opsz' 144,'SOFT' 60;font-weight:400;background:linear-gradient(135deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .lib-footer-sub{font-size:14px;color:#888;max-width:480px;margin:0 auto 24px}
 .lib-footer-cta{display:inline-block;padding:10px 24px;background:rgba(233,69,96,.1);border:1px solid rgba(233,69,96,.3);border-radius:8px;color:#e94560;font-size:14px;transition:all .2s}
 .lib-footer-cta:hover{background:rgba(233,69,96,.18);border-color:rgba(233,69,96,.5)}
@@ -454,7 +475,8 @@ select{font-family:inherit}
 @media(max-width:768px){
   #sidebar{display:none}
   #dash-header{padding:32px 16px 20px}
-  #paste-logo-wrap svg{width:28px;height:28px}
+  #paste-logo-wrap img{width:120px;height:120px}
+  #paste-logo-wrap::before{width:240px;height:240px}
   #content{padding:16px 16px 48px}
   .prompt-card-grid{grid-template-columns:1fr}
   #back-link{top:10px;right:10px;font-size:10px;padding:5px 12px}
@@ -503,25 +525,9 @@ select{font-family:inherit}
   <div id="main">
     <!-- Dash header -->
     <header id="dash-header">
-      <div id="paste-logo-wrap">
-        <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="10" y="16" width="36" height="44" rx="5" fill="#1a1a1a" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
-          <rect x="22" y="10" width="12" height="9" rx="3" fill="#2a2a2a" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/>
-          <circle cx="44" cy="20" r="11" fill="url(#libBulbBg)"/>
-          <circle cx="44" cy="19" r="6.5" fill="url(#libBulbFill)" opacity=".9"/>
-          <path d="M41 25h6M42.5 27h3" stroke="rgba(255,255,255,.5)" stroke-width="1.2" stroke-linecap="round"/>
-          <defs>
-            <linearGradient id="libBulbBg" x1="33" y1="9" x2="55" y2="31" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#f59e0b"/>
-              <stop offset="1" stop-color="#f97316"/>
-            </linearGradient>
-            <radialGradient id="libBulbFill" cx="42%" cy="38%" r="58%">
-              <stop stop-color="#fef3c7"/>
-              <stop offset="1" stop-color="#f59e0b"/>
-            </radialGradient>
-          </defs>
-        </svg>
-      </div>
+      <a id="paste-logo-wrap" href="index.html" aria-label="Paste — back to intro">
+        <img src="public/paste-icon.png" alt="Paste logo" draggable="false" width="160" height="160"/>
+      </a>
       <div class="lib-eyebrow"><span class="lib-dot"></span> Open beta · v0.1 &nbsp;·&nbsp; <span id="total-count-eyebrow"></span> prompts</div>
       <h1 class="dash-title">Paste <span class="dash-title-sub">Library</span></h1>
       <p class="dash-count" id="total-count">— prompts</p>
