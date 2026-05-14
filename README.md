@@ -10,11 +10,11 @@
 [![Prompts](https://img.shields.io/badge/Prompts-1000%2B-blue.svg)](#whats-included)
 [![Tiers](https://img.shields.io/badge/Tiers-Quick%20%7C%20Combo%20%7C%20Paragraph-purple.svg)](#tier-system)
 [![Sections](https://img.shields.io/badge/Sections-33-orange.svg)](#whats-included)
-[![Format](https://img.shields.io/badge/Format-JSON%20%2B%20TypeScript-lightgrey.svg)](#quick-start)
+[![Format](https://img.shields.io/badge/Format-JSON%20%2B%20TypeScript-lightgrey.svg)](#whats-included)
 
 **1000+ production-ready prompts organized by tier (Quick/Combo/Paragraph) for AI-assisted development, security, and workflows.**
 
-[Tier System](#tier-system) | [What's Included](#whats-included) | [Quick Start](#quick-start) | [Example Prompts](#example-prompts)
+[Tier System](#tier-system) | [What's Included](#whats-included) | [Example Prompts](#example-prompts)
 
 </div>
 
@@ -111,38 +111,6 @@ PR Review, Code Explanation, Team Communication, Stakeholder Update, Hiring
 
 ---
 
-## Quick Start
-
-### Option 1: Browse the JSON directly
-
-```bash
-git clone https://github.com/DevCraftXCoder/prompt-library.git
-cd prompt-library
-# Open prompts.json in any editor or JSON viewer
-```
-
-### Option 2: Filter by tier or section
-
-```bash
-# Quick prompts for the Build domain (requires jq)
-cat prompts.json | jq '[.[] | select(.tier == "quick" and .domain == "Build")]'
-
-# All security prompts
-cat prompts.json | jq '[.[] | select(.domain == "Run & Secure")]'
-```
-
-### Option 3: Import in TypeScript projects
-
-```typescript
-import prompts from './prompts.json';
-
-const quickBuildPrompts = prompts.filter(
-  p => p.tier === 'quick' && p.domain === 'Build'
-);
-```
-
----
-
 ## Example Prompts
 
 ### Quick — Code Review
@@ -213,7 +181,7 @@ These prompts work across any domain and any AI client without modification.
 ## Recent Additions
 
 - **Library website overhaul** — 7-phase UI redesign: cmdk search shell with ⌘K hotkey, prompt-type taxonomy tabs (/agent /flow /system /prompt), pill row unification, card metadata parity (stars/comments/version), featured prompts row with 6 curated entries
-- **Slash command badges** — `/command-handle` badges on card headers for direct Claude Code integration references
+- **Slash command badges** — `/command-handle` badges on card headers for direct AI tool integration references
 - **Terminal mock** — Featured section terminal animation demonstrating prompt-to-output flow
 - **Footer CTA redesign** — "Stop pasting. Start shipping." — new conversion-focused footer
 - **Minimal custom scrollbar** — Replaced arrow-button scrollbar with a clean, minimal track
