@@ -188,6 +188,23 @@ These prompts work across any domain and any AI client without modification.
 
 ---
 
+## Quick Access
+
+Pull the full library locally — no git history, no install:
+
+```bash
+pnpm dlx degit DevCraftXCoder/Prompt-Library prompt-library
+```
+
+Consume `prompts.json` directly in your project:
+
+```bash
+# Fetch the raw JSON (3931 prompts)
+curl -s https://raw.githubusercontent.com/DevCraftXCoder/Prompt-Library/main/prompts.json | pnpm dlx json-query ".[0:5]"
+```
+
+---
+
 ## Contributing
 
 All contributions must follow the tier structure. Submit new prompts with:
