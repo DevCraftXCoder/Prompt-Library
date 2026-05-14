@@ -30,3 +30,6 @@ coverage/
 
 # OS
 Thumbs.db
+
+# Forge / 4ge run artifacts
+_runs/

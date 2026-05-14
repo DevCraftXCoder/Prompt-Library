@@ -450,16 +450,19 @@ footer{padding:32px 28px;border-top:1px solid var(--line);display:flex;align-ite
         </div>
       </aside>
       <main class="dash-main">
-        <div class="crumb">workspace › library › <span style="color:#fbbf24">adversarial-code-reviewer</span></div>
-        <h3>Adversarial code reviewer · v2.1</h3>
+        <div class="crumb">workspace › quick-access › <span style="color:#fbbf24">pnpm</span></div>
+        <h3>Quick access · pnpm</h3>
         <div class="terminal">
-          <div><span class="prm">~/paste $</span> <span class="cmd">paste deploy adversarial-code-reviewer --target=staging</span></div>
-          <div class="out">→ resolving prompt graph (3 nodes, 2 tools)</div>
-          <div class="out">→ injecting workspace context (1.4 MB)</div>
-          <div class="out">→ versioning v2.1 → v2.1.1-staging</div>
-          <div class="out">→ uploading artifacts...</div>
-          <div><span class="ok">✓ deployed</span> <span class="out">paste.dev/r/devcraftxcoder/adv-cr@2.1.1</span></div>
-          <div><span class="prm">~/paste $</span> <span class="cmd cursor-blink" id="tt"></span></div>
+          <div><span class="prm">~/prompt-library $</span> <span class="cmd">pnpm dlx degit DevCraftXCoder/Prompt-Library prompt-library</span></div>
+          <div class="out">→ cloning DevCraftXCoder/Prompt-Library#main</div>
+          <div class="out">→ writing to ./prompt-library (no git history)</div>
+          <div><span class="ok">✓ done</span> <span class="out">3931 prompts · prompts.json (4.2 MB)</span></div>
+          <div>&nbsp;</div>
+          <div><span class="prm">~/prompt-library $</span> <span class="cmd">curl -s raw.githubusercontent.com/&hellip;/prompts.json | pnpm dlx json-query ".[0:5]"</span></div>
+          <div class="out">→ fetching prompts.json (4.2 MB)</div>
+          <div class="out">→ json-query streaming 5 records</div>
+          <div><span class="ok">✓ 5 emitted</span> <span class="out">build · debug · threat-model · refactor · adr</span></div>
+          <div><span class="prm">~/prompt-library $</span> <span class="cmd cursor-blink" id="tt"></span></div>
         </div>
       </main>
     </div>
@@ -520,7 +523,7 @@ document.querySelectorAll('.card').forEach(c=>{c.addEventListener('mousemove',e=
 (()=>{const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -40px 0px'});document.querySelectorAll('.reveal').forEach(e=>io.observe(e));})();
 
 /* Terminal typing */
-(()=>{const e=document.getElementById('tt');if(!e)return;const ln=['paste search "rag distiller"','paste fork adv-cr@2.1 → my-team/adv-cr','paste run threat-model --target=./src','paste publish my-team/adv-cr@2.1.2'];let li=0,ci=0,del=false;function tick(){const cur=ln[li];if(!del){ci++;e.textContent=cur.slice(0,ci);if(ci===cur.length){del=true;setTimeout(tick,1400);return;}}else{ci--;e.textContent=cur.slice(0,ci);if(ci===0){del=false;li=(li+1)%ln.length;}}setTimeout(tick,del?28:55+Math.random()*40);}setTimeout(tick,1200);})();
+(()=>{const e=document.getElementById('tt');if(!e)return;const ln=['pnpm dlx degit DevCraftXCoder/Prompt-Library library','pnpm dlx json-query ".[?domain==\u0060Build\u0060]" prompts.json','pnpm add -D @devcraftxcoder/prompts','pnpm dlx prompt-library use threat-model'];let li=0,ci=0,del=false;function tick(){const cur=ln[li];if(!del){ci++;e.textContent=cur.slice(0,ci);if(ci===cur.length){del=true;setTimeout(tick,1400);return;}}else{ci--;e.textContent=cur.slice(0,ci);if(ci===0){del=false;li=(li+1)%ln.length;}}setTimeout(tick,del?28:55+Math.random()*40);}setTimeout(tick,1200);})();
 </script>
 <script type="module" src="public/prism-bg.js"></script>
 </body>
