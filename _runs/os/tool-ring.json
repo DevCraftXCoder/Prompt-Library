@@ -1,0 +1,30 @@
+{"tool":"Bash","ts":1778105921456,"command":"cd C:/Za/repos-staging/prompt-library && git add public/prism-bg.css && git commit -m \"style(prism): reduce intensity — opacity 0.35 on canvas + darker tint overlay\" && git push origin master"}
+{"tool":"Bash","ts":1778106140658,"command":"cd C:/Za/repos-staging/prompt-library && git status && git diff --staged | grep -iE \"(api_key|secret|token|password)\" | head -3; echo \"ok\""}
+{"tool":"Bash","ts":1778106147278,"command":"cd C:/Za/repos-staging/prompt-library && git diff --stat"}
+{"tool":"Bash","ts":1778106153064,"command":"cd C:/Za/repos-staging/prompt-library && git diff index.html | head -40"}
+{"tool":"Bash","ts":1778106166981,"command":"cd C:/Za/repos-staging/prompt-library && git add library.html && git commit -m \"$(cat <<'EOF'\ntypography: Space Grotesk + Inter replacing Syne + DM Sans\n\nSwap to professional AI-startup font stack:\n- "}
+{"tool":"Bash","ts":1778106175265,"command":"cd C:/Za/repos-staging/prompt-library && git status --short && git diff --stat"}
+{"tool":"Bash","ts":1778106186572,"command":"cd C:/Za/repos-staging/prompt-library && git add index.html && git commit -m \"feat(nav): use full clipboard+lightbulb logo at top-left, transparent + larger\" && git push origin HEAD 2>&1"}
+{"tool":"Bash","ts":1778106279542,"command":"cp \"C:/Users/J/Documents/paste 4.png\" \"C:/Za/repos-staging/prompt-library/public/paste-icon.png\" && echo \"copied\""}
+{"tool":"Edit","ts":1778106286259,"filePath":"C:\\Za\\repos-staging\\prompt-library\\index.html"}
+{"tool":"Bash","ts":1778106294407,"command":"node C:/Za/francois-landing/scripts/deploy.cjs 2>&1 | tail -15"}
+{"tool":"Edit","ts":1778106346210,"filePath":"C:\\Za\\repos-staging\\prompt-library\\index.html"}
+{"tool":"Edit","ts":1778106361912,"filePath":"C:\\Za\\repos-staging\\prompt-library\\index.html"}
+{"tool":"Bash","ts":1778106370433,"command":"cd C:/Za/repos-staging/prompt-library && git add index.html public/paste-icon.png && git commit -m \"feat(nav): replace top-left logo with paste-icon.png, radial mask removes grey bg\" && git push origi"}
+{"tool":"Edit","ts":1778106684498,"filePath":"C:\\Za\\repos-staging\\prompt-library\\public\\prism-bg.css"}
+{"tool":"Bash","ts":1778106690810,"command":"cd C:/Za/repos-staging/prompt-library && git add public/prism-bg.css && git commit -m \"style(prism): nudge intensity up — opacity 0.55, lighter tint\" && git push origin master"}
+{"tool":"Bash","ts":1778109770723,"command":"cd C:/Za/repos-staging/attack-map && git rev-parse HEAD 2>&1 ; cd C:/Za/repos-staging/prompt-library && git status --short 2>&1 | head -5"}
+{"tool":"Bash","ts":1778109775228,"command":"grep -n \"pregame-injuries\\|injuries\" C:/Za/audit.js 2>&1 | head -10"}
+{"tool":"Read","ts":1778109778135,"filePath":"C:\\Za\\audit.js"}
+{"tool":"Bash","ts":1778109790906,"command":"pm2 restart ev-betta-pregame-injuries 2>&1 | tail -10"}
+{"tool":"Read","ts":1778109792197,"filePath":"C:\\Za\\francois-landing\\.gitignore"}
+{"tool":"Read","ts":1778109792199,"filePath":"C:\\Za\\.gitignore"}
+{"tool":"Bash","ts":1778109794430,"command":"cat C:/Za/mizzy-tools/.gitignore 2>&1"}
+{"tool":"Edit","ts":1778109809075,"filePath":"C:\\Za\\.gitignore"}
+{"tool":"Edit","ts":1778109810698,"filePath":"C:\\Za\\francois-landing\\.gitignore"}
+{"tool":"Read","ts":1778109813425,"filePath":"C:\\Za\\mizzy-tools\\.gitignore"}
+{"tool":"Edit","ts":1778109817521,"filePath":"C:\\Za\\mizzy-tools\\.gitignore"}
+{"tool":"Bash","ts":1778219057752,"command":"cd \"C:/Za/repos-staging/prompt-library\" && git remote -v 2>&1 | head -3"}
+{"tool":"Bash","ts":1778219143301,"command":"cd \"C:/Za/_portfolio/Prompt-Library\" && git log --oneline -3 2>&1; echo ---; cd \"C:/Za/repos-staging/prompt-library\" && git log --oneline -3 2>&1"}
+{"tool":"Bash","ts":1778219202074,"command":"cd \"C:/Za/_portfolio/Prompt-Library\" && git status --short && echo BRANCH: && git rev-parse --abbrev-ref HEAD && echo --- && cd \"C:/Za/repos-staging/prompt-library\" && git status --short && echo BRANC"}
+{"tool":"Bash","ts":1779073301388,"command":"cd \"C:/Za/repos-staging/prompt-library\" && sed -i '373d' index.html && echo \"Removed eyebrow from staging index.html\""}

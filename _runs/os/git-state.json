@@ -1,0 +1,36 @@
+{
+  "branch": "master",
+  "ahead": 0,
+  "behind": 0,
+  "dirty": true,
+  "uncommittedFiles": 1,
+  "recentCommits": [
+    {
+      "sha": "b8d201d",
+      "subject": "fix(ui): replace native select with custom dark-themed dropdown",
+      "ts": "2026-05-06T18:34:24-04:00"
+    },
+    {
+      "sha": "09c141a",
+      "subject": "feat(ui): top 10 UI polish — bigger logo, remove title, cleaner controls",
+      "ts": "2026-05-06T18:32:04-04:00"
+    },
+    {
+      "sha": "5f95f52",
+      "subject": "style(prism): nudge intensity up — opacity 0.55, lighter tint",
+      "ts": "2026-05-06T18:31:28-04:00"
+    },
+    {
+      "sha": "e1382b9",
+      "subject": "feat(nav): replace top-left logo with paste-icon.png, radial mask removes grey bg",
+      "ts": "2026-05-06T18:26:07-04:00"
+    },
+    {
+      "sha": "9e0ec88",
+      "subject": "feat(nav): use full clipboard+lightbulb logo at top-left, transparent + larger",
+      "ts": "2026-05-06T18:23:03-04:00"
+    }
+  ],
+  "lastCommitTs": "2026-05-06T18:34:24-04:00",
+  "timestamp": "2026-05-08T05:46:51.417Z"
+}
