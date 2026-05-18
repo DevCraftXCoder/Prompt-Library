@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://devcraftxcoder.github.io/Prompt-Library/library.html"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#080809;color:#e8e8e8;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;height:100%}
@@ -28,13 +28,33 @@ select{font-family:inherit}
   --txt-dim:rgba(255,255,255,0.4);
   --txt-mute:rgba(255,255,255,0.25);
   --txt-ultra:rgba(255,255,255,0.2);
-  --font-head:'Space Grotesk',sans-serif;
-  --font-body:'Inter',sans-serif;
+  --font-head:'Fraunces',Georgia,serif;
+  --font-body:'Inter',system-ui,sans-serif;
   --font-mono:'JetBrains Mono',monospace;
+  --font-mono-jb:'JetBrains Mono',monospace;
+  --amber:#f59e0b;
+  --amber-glow:rgba(245,158,11,.45);
+  --ink-mute:#505050;
 }
 
+/* ─── Phase 1: bg blobs + grid overlay ──────────────────────────────── */
+.lib-bg-field{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.lib-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.065}
+.lb1{width:500px;height:500px;background:radial-gradient(circle,rgba(233,69,96,.9),transparent 70%);top:-100px;left:-100px}
+.lb2{width:600px;height:600px;background:radial-gradient(circle,rgba(245,158,11,.7),transparent 70%);bottom:-150px;right:-100px}
+.lb3{width:350px;height:350px;background:radial-gradient(circle,rgba(99,102,241,.8),transparent 70%);top:40%;left:50%;transform:translateX(-50%)}
+.lib-grid-overlay{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:48px 48px}
+
+/* ─── Phase 1: eyebrow chip ─────────────────────────────────────────── */
+.lib-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border:1px solid rgba(255,255,255,.08);border-radius:999px;font-size:11px;color:#888;margin-bottom:12px;}
+.lib-dot{width:5px;height:5px;border-radius:50%;background:var(--amber,#f59e0b);box-shadow:0 0 8px var(--amber,#f59e0b);animation:pulse 2s ease-in-out infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ─── Phase 1: title sub ─────────────────────────────────────────────── */
+.dash-title-sub{font-family:var(--font-head);font-style:italic;font-variation-settings:'opsz' 144,'SOFT' 60;font-weight:400;opacity:.55;font-size:0.7em;letter-spacing:.005em}
+
 /* ─── Layout ──────────────────────────────────────────────────────────── */
-#root{display:flex;align-items:stretch;min-height:100vh}
+#root{display:flex;align-items:stretch;min-height:100vh;position:relative;z-index:1}
 
 /* ─── Sidebar ─────────────────────────────────────────────────────────── */
 #sidebar{
@@ -44,7 +64,12 @@ select{font-family:inherit}
   position:sticky;top:0;height:100vh;overflow-y:auto;
   display:flex;flex-direction:column;
   padding:20px 0 24px;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent;
 }
+#sidebar::-webkit-scrollbar{width:3px}
+#sidebar::-webkit-scrollbar-track{background:transparent}
+#sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
+#sidebar::-webkit-scrollbar-button{display:none}
 .sidebar-cat-header{
   font-size:9px;font-weight:700;letter-spacing:1.2px;
   color:var(--txt-ultra);text-transform:uppercase;
@@ -77,7 +102,7 @@ select{font-family:inherit}
 }
 .sidebar-label{font-size:13px;font-weight:500;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sidebar-count{
-  font-size:10px;font-family:var(--font-mono);
+  font-size:10px;font-family:var(--font-mono-jb);
   background:rgba(255,255,255,0.07);
   color:var(--txt-dim);
   border-radius:10px;padding:2px 6px;flex-shrink:0;
@@ -95,15 +120,38 @@ select{font-family:inherit}
   background:linear-gradient(180deg,rgba(233,69,96,0.04) 0%,transparent 100%);
 }
 @keyframes pasteLogoFloat{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-5px)}
+  0%,100%{transform:translateY(0) rotate(-.4deg)}
+  50%{transform:translateY(-12px) rotate(.4deg)}
 }
 #paste-logo-wrap{
-  animation:pasteLogoFloat 4s ease-in-out infinite;
-  margin-bottom:12px;
+  position:relative;display:block;
+  animation:pasteLogoFloat 5s ease-in-out infinite;
+  margin-bottom:18px;
+  cursor:pointer;
+  filter:
+    drop-shadow(0 0 28px rgba(245,158,11,.7))
+    drop-shadow(0 0 72px rgba(249,115,22,.4))
+    drop-shadow(0 18px 36px rgba(0,0,0,.7));
+  transition:filter .4s ease, transform .45s cubic-bezier(.22,1.4,.36,1);
 }
-#paste-logo-wrap svg{width:160px;height:160px}
-.dash-count{font-size:11px;font-family:var(--font-mono);color:var(--txt-mute);margin-bottom:20px;letter-spacing:0.5px;text-transform:uppercase}
+#paste-logo-wrap::before{
+  content:"";position:absolute;left:50%;top:50%;width:340px;height:340px;
+  border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;
+  background:radial-gradient(circle,rgba(245,158,11,.45) 0%,rgba(249,115,22,.15) 45%,transparent 72%);
+  filter:blur(50px);opacity:.85;z-index:-1;
+  animation:libHaloPulse 5.5s ease-in-out infinite;
+}
+@keyframes libHaloPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.7}50%{transform:translate(-50%,-50%) scale(1.18);opacity:1}}
+#paste-logo-wrap img{width:160px;height:160px;display:block;object-fit:contain;
+  -webkit-mask-image:radial-gradient(ellipse 60% 62% at 46% 50%,#000 50%,transparent 80%);
+          mask-image:radial-gradient(ellipse 60% 62% at 46% 50%,#000 50%,transparent 80%)}
+#paste-logo-wrap:hover{animation-play-state:paused;transform:scale(1.07) rotate(-1deg);
+  filter:
+    drop-shadow(0 0 56px rgba(251,191,36,1))
+    drop-shadow(0 0 140px rgba(245,158,11,.75))
+    drop-shadow(0 28px 56px rgba(0,0,0,.85))}
+.dash-count{font-size:11px;font-family:var(--font-mono-jb);color:var(--txt-mute);margin-bottom:20px;letter-spacing:0.5px;text-transform:uppercase}
+.dash-title{font-family:var(--font-head);font-variation-settings:'opsz' 144,'SOFT' 30;font-size:2.5rem;font-weight:500;letter-spacing:-.025em;margin-bottom:4px}
 
 .controls-row{
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
@@ -150,29 +198,20 @@ select{font-family:inherit}
 .sort-opt.active{color:#e8e8e8;background:rgba(233,69,96,0.12)}
 
 .search-section{width:100%;max-width:560px;margin:0 auto}
-.search-wrap{position:relative}
-.search-icon{
-  position:absolute;left:14px;top:50%;transform:translateY(-50%);
-  color:var(--txt-mute);pointer-events:none;font-size:13px;
-}
-#search-input{
-  width:100%;padding:11px 40px 11px 40px;
-  background:rgba(255,255,255,0.04);border:1px solid var(--border);
-  border-radius:24px;color:var(--txt);font-size:13px;outline:none;
-  transition:border-color 0.18s,background 0.18s,box-shadow 0.18s;
-}
-#search-input::placeholder{color:var(--txt-mute)}
-#search-input:focus{
-  border-color:var(--red-border);
-  background:rgba(255,255,255,0.06);
-  box-shadow:0 0 0 3px rgba(233,69,96,0.08);
-}
-#search-clear{
-  position:absolute;right:14px;top:50%;transform:translateY(-50%);
-  color:var(--txt-mute);font-size:16px;padding:4px;display:none;
-  transition:color 0.15s;
-}
-#search-clear:hover{color:var(--txt-dim)}
+
+/* ─── Phase 2: cmdk shell ────────────────────────────────────────────── */
+.cmdk-shell{display:flex;align-items:center;gap:10px;padding:10px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.10);border-radius:12px;transition:border-color .2s}
+.cmdk-shell:focus-within{border-color:rgba(233,69,96,.5)}
+.cmdk-icon{color:#555;flex-shrink:0;display:grid;place-items:center;transition:color .2s}
+.cmdk-shell:focus-within .cmdk-icon{color:var(--red,#e94560)}
+.cmdk-shell input{flex:1;background:transparent;border:0;outline:0;color:#e8e8e8;font-size:15px;font-family:inherit}
+.cmdk-shell input::placeholder{color:#555}
+.kbd{font-family:var(--font-mono-jb,monospace);font-size:11px;color:#555;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:5px;padding:2px 6px;flex-shrink:0;white-space:nowrap}
+.cmdk-hint{margin-top:8px;font-size:12px;color:#555;display:flex;align-items:center;justify-content:center;gap:8px}
+.cmdk-spark{color:var(--amber,#f59e0b);animation:spark 2.4s ease-in-out infinite}
+@keyframes spark{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.3) rotate(15deg)}}
+#search-input{color:#e8e8e8;font-size:15px;font-family:inherit}
+#search-clear{background:none;border:0;color:#666;cursor:pointer;padding:4px 8px;font-size:18px;line-height:1;display:none}
 #search-clear.visible{display:block}
 
 /* Service filter pills */
@@ -203,7 +242,7 @@ select{font-family:inherit}
   display:flex;align-items:center;justify-content:space-between;
   margin-bottom:14px;flex-wrap:wrap;gap:8px;
 }
-.section-title{font-family:var(--font-head);font-size:17px;font-weight:700}
+.section-title{font-family:var(--font-head);font-variation-settings:'opsz' 144,'SOFT' 30;font-size:19px;font-weight:500;letter-spacing:-.01em}
 .section-meta{font-size:12px;font-family:var(--font-mono);color:var(--txt-dim)}
 
 .domain-pills{
@@ -293,7 +332,7 @@ select{font-family:inherit}
   display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;
   margin-top:auto;
 }
-.card-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
+.card-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0;font-family:var(--font-mono-jb)}
 .card-domain{
   font-size:10px;color:var(--txt-mute);font-family:var(--font-mono);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px;
@@ -326,6 +365,37 @@ select{font-family:inherit}
 }
 .card-btn.primary:hover{background:rgba(233,69,96,0.2)}
 .card-btn.copied{background:rgba(40,200,100,0.1);border-color:rgba(40,200,100,0.4);color:#28c864}
+
+/* ─── Phase 6: featured row ──────────────────────────────────────────── */
+#featured-section{margin-bottom:32px}
+.featured-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;color:#888;margin-bottom:12px}
+.featured-title{font-family:var(--font-head);font-variation-settings:'opsz' 144,'SOFT' 30;font-size:24px;font-weight:500;letter-spacing:-.018em;margin-bottom:16px;color:#e8e8e8}
+.featured-title em{font-family:var(--font-head);font-style:italic;font-variation-settings:'opsz' 144,'SOFT' 60;opacity:.65;font-weight:400}
+.featured-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:24px}
+.featured-card{background:rgba(255,255,255,.03);border:1px solid rgba(233,69,96,.2);border-radius:12px;padding:16px;cursor:pointer;transition:border-color .2s,transform .15s}
+.featured-card:hover{border-color:rgba(233,69,96,.45);transform:translateY(-1px)}
+.featured-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.featured-card-icon{font-size:20px}
+.featured-card-tag{font-family:var(--font-mono-jb,monospace);font-size:10px;color:#e94560;background:rgba(233,69,96,.1);border:1px solid rgba(233,69,96,.2);border-radius:4px;padding:2px 7px;margin-left:auto}
+.featured-card h3{font-family:var(--font-body);font-size:14px;font-weight:700;margin-bottom:6px}
+.featured-card p{font-size:12px;color:#888;line-height:1.5;margin-bottom:10px}
+.featured-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:#666;font-family:var(--font-mono-jb,monospace)}
+.feat-badge{display:inline-block;font-size:9px;background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.25);border-radius:3px;padding:1px 5px;margin-bottom:10px;font-family:var(--font-mono-jb,monospace);text-transform:uppercase;letter-spacing:.05em}
+
+/* ─── Phase 5: card metadata parity ─────────────────────────────────── */
+.card-meta-row{display:flex;align-items:center;gap:12px;font-size:11px;color:#666;font-family:var(--font-mono-jb,monospace);margin-top:6px}
+.cm-version{margin-left:auto;opacity:.5}
+
+/* ─── Phase 4: type taxonomy ─────────────────────────────────────────── */
+.card-type-tag{font-family:var(--font-mono-jb,monospace);font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.05);color:#888;border:1px solid rgba(255,255,255,.08)}
+.card-type-tag[data-type="agent"]{color:#818cf8;border-color:rgba(129,140,248,.25);background:rgba(129,140,248,.08)}
+.card-type-tag[data-type="flow"]{color:#34d399;border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.08)}
+.card-type-tag[data-type="system"]{color:#fb923c;border-color:rgba(251,146,60,.25);background:rgba(251,146,60,.08)}
+.card-type-tag[data-type="prompt"]{color:#888;border-color:rgba(255,255,255,.08);background:rgba(255,255,255,.04)}
+.type-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.type-tab{padding:5px 12px;border-radius:999px;font-size:12px;font-family:var(--font-mono-jb,monospace);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#888;cursor:pointer;transition:all .15s}
+.type-tab.active,.type-tab:hover{color:#e8e8e8;border-color:rgba(255,255,255,.2)}
+.type-tab.active{background:rgba(255,255,255,.08)}
 
 /* Empty state */
 #empty-state{
@@ -383,11 +453,30 @@ select{font-family:inherit}
 }
 @keyframes loadingPulse{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
 
+/* ─── Phase 7: footer CTA ────────────────────────────────────────────── */
+.lib-footer{margin-top:64px;padding:48px 24px;border-top:1px solid rgba(255,255,255,.06);text-align:center}
+.lib-footer-inner{max-width:600px;margin:0 auto}
+.lib-footer-headline{font-family:var(--font-head);font-variation-settings:'opsz' 144,'SOFT' 30;font-size:34px;font-weight:500;letter-spacing:-.025em;margin-bottom:10px}
+.lib-footer-headline em{font-family:var(--font-head);font-style:italic;font-variation-settings:'opsz' 144,'SOFT' 60;font-weight:400;background:linear-gradient(135deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lib-footer-sub{font-size:14px;color:#888;max-width:480px;margin:0 auto 24px}
+.lib-footer-cta{display:inline-block;padding:10px 24px;background:rgba(233,69,96,.1);border:1px solid rgba(233,69,96,.3);border-radius:8px;color:#e94560;font-size:14px;transition:all .2s}
+.lib-footer-cta:hover{background:rgba(233,69,96,.18);border-color:rgba(233,69,96,.5)}
+
+.card-command-handle{font-family:var(--font-mono-jb,'JetBrains Mono',monospace);font-size:10px;color:#555;padding:3px 8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:4px;margin-top:6px;cursor:copy;transition:color .15s,border-color .15s;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-command-handle:hover{color:#aaa;border-color:rgba(255,255,255,.15)}
+
+.lib-terminal{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);border-radius:8px;font-family:var(--font-mono-jb,'JetBrains Mono',monospace);font-size:12px;margin-bottom:20px;max-width:100%;overflow:hidden}
+.lt-prompt{color:#555}
+.lt-cmd{color:#e8e8e8;transition:opacity .3s}
+.lt-cursor{color:#e94560;animation:blink .9s step-end infinite;margin-left:1px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
 /* Responsive */
 @media(max-width:768px){
   #sidebar{display:none}
   #dash-header{padding:32px 16px 20px}
-  #paste-logo-wrap svg{width:128px;height:128px}
+  #paste-logo-wrap img{width:120px;height:120px}
+  #paste-logo-wrap::before{width:240px;height:240px}
   #content{padding:16px 16px 48px}
   .prompt-card-grid{grid-template-columns:1fr}
   #back-link{top:10px;right:10px;font-size:10px;padding:5px 12px}
@@ -418,6 +507,13 @@ select{font-family:inherit}
 </div>
 <div id="toast"></div>
 
+<div class="lib-bg-field" aria-hidden="true">
+  <div class="lib-blob lb1"></div>
+  <div class="lib-blob lb2"></div>
+  <div class="lib-blob lb3"></div>
+</div>
+<div class="lib-grid-overlay" aria-hidden="true"></div>
+
 <div id="root" style="display:none">
   <!-- Sidebar -->
   <aside id="sidebar">
@@ -429,19 +525,10 @@ select{font-family:inherit}
   <div id="main">
     <!-- Dash header -->
     <header id="dash-header">
-      <div id="paste-logo-wrap">
-        <svg viewBox="0 0 119 119" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="22" y="22" width="64" height="80" rx="7" fill="none" stroke="#1B2235" stroke-width="3.5"/>
-          <path d="M46 22 Q46 14 54 14 H66 Q74 14 74 22" fill="none" stroke="#1B2235" stroke-width="3.5" stroke-linecap="round"/>
-          <rect x="33" y="48" width="30" height="3" rx="1.5" fill="#ABABAB"/>
-          <rect x="33" y="57" width="22" height="3" rx="1.5" fill="#ABABAB"/>
-          <rect x="33" y="66" width="26" height="3" rx="1.5" fill="#ABABAB"/>
-          <circle cx="84" cy="35" r="16" fill="#F9A825"/>
-          <path d="M84 26 L84 34 M84 36 L84 36" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-          <rect x="79" y="48" width="10" height="2.5" rx="1.25" fill="#1B2235"/>
-          <rect x="80" y="51.5" width="8" height="2.5" rx="1.25" fill="#1B2235"/>
-        </svg>
-      </div>
+      <a id="paste-logo-wrap" href="index.html" aria-label="Paste — back to intro">
+        <img src="public/paste-icon.png" alt="Paste logo" draggable="false" width="160" height="160"/>
+      </a>
+      <h1 class="dash-title">Paste <span class="dash-title-sub">Library</span></h1>
       <p class="dash-count" id="total-count">— prompts</p>
 
       <div class="controls-row">
@@ -458,22 +545,32 @@ select{font-family:inherit}
             <button class="sort-opt active" data-value="default">Default</button>
             <button class="sort-opt" data-value="az">A → Z</button>
             <button class="sort-opt" data-value="za">Z → A</button>
+            <button class="sort-opt" data-value="hightolow">High to Low</button>
+            <button class="sort-opt" data-value="lowtohigh">Low to High</button>
             <button class="sort-opt" data-value="stars">Starred first</button>
           </div>
         </div>
       </div>
 
       <div class="search-section">
-        <div class="search-wrap">
-          <span class="search-icon">🔍</span>
-          <input id="search-input" type="search" placeholder="Search prompts…" autocomplete="off" spellcheck="false"/>
+        <div class="cmdk-shell">
+          <span class="cmdk-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </span>
+          <input id="search-input" type="search" placeholder="Search prompts, workflows, agents…" autocomplete="off" spellcheck="false"/>
           <button id="search-clear" title="Clear">×</button>
+          <span class="kbd">⌘K</span>
         </div>
+        <div class="cmdk-hint"><span class="cmdk-spark">✦</span> Try: <em id="cmdk-rotate" style="font-style:normal;color:#666"></em></div>
         <div class="service-row" id="service-pills">
           <button class="svc-pill active" data-svc="all">All</button>
           <button class="svc-pill" data-svc="claude">Claude</button>
           <button class="svc-pill" data-svc="codex">Codex</button>
           <button class="svc-pill" data-svc="gemini">Gemini</button>
+          <button class="svc-pill" data-domain="Engineering">Engineering</button>
+          <button class="svc-pill" data-domain="Agents">Agents</button>
+          <button class="svc-pill" data-domain="Security">Security</button>
+          <button class="svc-pill" data-domain="Data">Data</button>
         </div>
       </div>
     </header>
@@ -489,12 +586,30 @@ select{font-family:inherit}
       <div class="domain-pills" id="domain-pills"></div>
       <div id="result-count"></div>
 
+      <div class="type-tabs" id="type-tabs">
+        <button class="type-tab active" data-type="all">All Types</button>
+        <button class="type-tab" data-type="agent">/agent</button>
+        <button class="type-tab" data-type="flow">/flow</button>
+        <button class="type-tab" data-type="system">/system</button>
+        <button class="type-tab" data-type="prompt">/prompt</button>
+      </div>
       <div class="tier-tabs" id="tier-tabs">
         <button class="tier-tab active" data-tier="all">All Tiers</button>
         <button class="tier-tab" data-tier="full">Full Prompts</button>
         <button class="tier-tab" data-tier="quick">Quick</button>
         <button class="tier-tab" data-tier="combo">Combo</button>
         <button class="tier-tab" data-tier="paragraph">Paragraph</button>
+      </div>
+
+      <div id="featured-section">
+        <div class="featured-eyebrow"><span class="lib-dot"></span> Featured prompts</div>
+        <h2 class="featured-title">Production-grade prompts, <em>curated</em></h2>
+        <div class="lib-terminal" aria-hidden="true">
+          <span class="lt-prompt">~/paste $</span>
+          <span class="lt-cmd" id="lt-rotating-cmd">paste use featured-adversarial-code-reviewer</span>
+          <span class="lt-cursor">█</span>
+        </div>
+        <div id="featured-grid" class="featured-card-grid"></div>
       </div>
 
       <div id="card-grid" class="prompt-card-grid"></div>
@@ -505,6 +620,13 @@ select{font-family:inherit}
       <div id="load-more-wrap">
         <button id="load-more-btn">Load more</button>
       </div>
+      <footer class="lib-footer">
+        <div class="lib-footer-inner">
+          <p class="lib-footer-headline">Stop pasting. <em>Start shipping.</em></p>
+          <p class="lib-footer-sub">A curated workspace for the prompts, agents, and workflows behind your best AI products.</p>
+          <a href="index.html" class="lib-footer-cta">← Back to intro</a>
+        </div>
+      </footer>
     </div>
   </div>
 </div>
@@ -521,6 +643,8 @@ let activeSection = 'all';
 let activeDomain = 'all';
 let activeTier = 'all';
 let activeSvc = 'all';
+let activeDomainPill = null; // Phase 3: top-level domain pill (Engineering/Agents/Security/Data)
+let activeType = 'all'; // Phase 4: type filter
 let sortMode = 'default';
 let query = '';
 let stars = JSON.parse(localStorage.getItem('paste-stars') || '{}');
@@ -540,9 +664,13 @@ async function load() {
     const r = await fetch('./prompts.json');
     allPrompts = await r.json();
     document.getElementById('total-count').textContent = `${allPrompts.length.toLocaleString()} prompts`;
+    const eyebrow = document.getElementById('total-count-eyebrow');
+    if (eyebrow) eyebrow.textContent = allPrompts.length.toLocaleString();
     document.getElementById('loading').style.display = 'none';
     document.getElementById('root').style.display = 'flex';
     buildSidebar();
+    renderFeatured();
+    updateFeaturedVisibility();
     render();
   } catch(e) {
     document.getElementById('loading').innerHTML = '<span style="color:#e94560">Failed to load prompts.json</span>';
@@ -580,6 +708,7 @@ function setSection(sec) {
   document.getElementById('section-title-text').textContent = sec === 'all' ? 'All Prompts' : m.label;
   buildDomainPills();
   render();
+  updateFeaturedVisibility();
 }
 
 function buildDomainPills() {
@@ -612,12 +741,30 @@ function refreshDomainPills() {
   });
 }
 
+const DOMAIN_PILL_MAP = {
+  'Engineering': ['Infrastructure','Dev & AI','Dev Experience','Internal Tools','Package Management','Dependencies','Environments','Configuration'],
+  'Agents': null, // special: type === 'agent'
+  'Security': ['Security','Auth & Authz','Compliance','Risk Management','Governance','Secrets Management'],
+  'Data': ['Data Engineering','Business Intelligence','Metrics & KPIs','Knowledge Base','Observability','Monitoring','Logging'],
+};
+
 function getFiltered() {
   let arr = allPrompts;
   if (activeSection !== 'all') arr = arr.filter(p => p.section === activeSection);
   if (activeDomain !== 'all') arr = arr.filter(p => p.domain === activeDomain);
   if (activeTier !== 'all') arr = arr.filter(p => p.tier === activeTier);
   if (activeSvc !== 'all') arr = arr.filter(p => (p.service || 'claude') === activeSvc);
+  // Phase 3: top-level domain pill filter
+  if (activeDomainPill) {
+    if (activeDomainPill === 'Agents') {
+      arr = arr.filter(p => p.type === 'agent');
+    } else {
+      const domains = DOMAIN_PILL_MAP[activeDomainPill] || [];
+      arr = arr.filter(p => domains.some(d => (p.domain || '').toLowerCase().includes(d.toLowerCase())));
+    }
+  }
+  // Phase 4: type filter
+  if (activeType !== 'all') arr = arr.filter(p => (p.type || 'prompt') === activeType);
   if (query) {
     const q = query.toLowerCase();
     arr = arr.filter(p =>
@@ -626,8 +773,16 @@ function getFiltered() {
       (p.domain || '').toLowerCase().includes(q)
     );
   }
+  const tierRank = { 'full': 4, 'quick': 3, 'combo': 3, 'paragraph': 1 };
+  if (modelMode === 'high') {
+    arr = [...arr].sort((a,b) => (tierRank[b.tier] || 0) - (tierRank[a.tier] || 0));
+  } else if (modelMode === 'low') {
+    arr = [...arr].sort((a,b) => (tierRank[a.tier] || 0) - (tierRank[b.tier] || 0));
+  }
   if (sortMode === 'az') arr = [...arr].sort((a,b) => (a.title||'').localeCompare(b.title||''));
   else if (sortMode === 'za') arr = [...arr].sort((a,b) => (b.title||'').localeCompare(a.title||''));
+  else if (sortMode === 'hightolow') arr = [...arr].sort((a,b) => (stars[b.id]?1:0) - (stars[a.id]?1:0));
+  else if (sortMode === 'lowtohigh') arr = [...arr].sort((a,b) => (stars[a.id]?1:0) - (stars[b.id]?1:0));
   else if (sortMode === 'stars') arr = [...arr].sort((a,b) => (stars[b.id]?1:0) - (stars[a.id]?1:0));
   return arr;
 }
@@ -694,11 +849,16 @@ function buildCard(p) {
         <span class="card-domain" title="${esc(p.domain || '')}">${esc(p.domain || '')}</span>
         <span class="card-svc-tag ${svc}">${svc}</span>
         <span class="card-tier-tag">${tier}</span>
+        <span class="card-type-tag" data-type="${p.type || 'prompt'}">${p.type ? '/' + p.type : '/prompt'}</span>
       </div>
       <div class="card-actions">
         ${isLong ? `<button class="card-btn expand-btn" data-id="${p.id}">Expand</button>` : ''}
         <button class="card-btn primary copy-btn" data-id="${p.id}" data-text="${esc(text)}">Copy</button>
       </div>
+      <div class="card-command-handle" data-cmd="paste use ${p.id}" title="Click to copy command">/paste use ${esc(p.id)}</div>
+    </div>
+    <div class="card-meta-row">
+      <span class="cm-version">${p.version || 'v1.0'}</span>
     </div>
   `;
 
@@ -722,6 +882,59 @@ function buildCard(p) {
 
 function esc(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtNum(n){return n>=1000?(n/1000).toFixed(1).replace('.0','')+'k':String(n)}
+
+// Phase 6: featured section
+function buildFeaturedCard(p) {
+  const div = document.createElement('div');
+  div.className = 'featured-card';
+  div.dataset.id = p.id;
+  const snippet = (p.prompt_short || p.prompt || '').slice(0, 120);
+  div.innerHTML = `
+    <div class="feat-badge">Featured</div>
+    <div class="featured-card-header">
+      <span class="featured-card-icon">${p.icon || '⚡'}</span>
+      <span class="featured-card-tag">/${p.type || 'prompt'}</span>
+    </div>
+    <h3>${esc(p.title)}</h3>
+    <p>${esc(snippet)}${snippet.length >= 120 ? '…' : ''}</p>
+    <div class="featured-meta">
+      <span>${p.version || 'v1.0'}</span>
+    </div>
+  `;
+  div.addEventListener('click', () => {
+    const text = p.prompt || '';
+    const final = modelMode === 'high' ? HIGH_PREAMBLE + text : text;
+    navigator.clipboard.writeText(final).then(() => {
+      showToast('Copied to clipboard');
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = final; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('Copied to clipboard');
+    });
+  });
+  return div;
+}
+
+function renderFeatured() {
+  const grid = document.getElementById('featured-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  const featured = allPrompts.filter(p => p.featured === true);
+  for (const p of featured) grid.appendChild(buildFeaturedCard(p));
+}
+
+function isAllFiltersDefault() {
+  return activeSection === 'all' && activeSvc === 'all' && !activeDomainPill && activeType === 'all' && activeTier === 'all' && activeDomain === 'all' && !query;
+}
+
+function updateFeaturedVisibility() {
+  const section = document.getElementById('featured-section');
+  if (!section) return;
+  section.style.display = isAllFiltersDefault() ? '' : 'none';
 }
 
 function toggleExpand(id, p, card, btn) {
@@ -775,6 +988,7 @@ function showToast(msg) {
 document.querySelectorAll('.model-btn').forEach(b => b.addEventListener('click', () => {
   modelMode = b.dataset.mode;
   document.querySelectorAll('.model-btn').forEach(x => x.classList.toggle('active', x === b));
+  render();
 }));
 
 const sortTrigger = document.getElementById('sort-trigger');
@@ -804,27 +1018,119 @@ document.getElementById('search-input').addEventListener('input', e => {
   query = e.target.value.trim();
   document.getElementById('search-clear').classList.toggle('visible', query.length > 0);
   render();
+  updateFeaturedVisibility();
 });
 document.getElementById('search-clear').addEventListener('click', () => {
   query = '';
   document.getElementById('search-input').value = '';
   document.getElementById('search-clear').classList.remove('visible');
   render();
+  updateFeaturedVisibility();
 });
 
+// Phase 2: ⌘K focus + Escape + rotating hints
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('search-input')?.focus();
+  }
+  if (e.key === 'Escape') {
+    const inp = document.getElementById('search-input');
+    if (inp && document.activeElement === inp) {
+      inp.value = ''; inp.blur();
+      query = '';
+      document.getElementById('search-clear').classList.remove('visible');
+      render();
+      updateFeaturedVisibility();
+    }
+  }
+});
+(function() {
+  const hints = ['refactor a React hook', 'OWASP threat model', 'chain-of-thought planner', 'adversarial code review', 'autonomous research lead', 'system prompt for senior engineer'];
+  let hi = 0;
+  const rotEl = document.getElementById('cmdk-rotate');
+  if (rotEl) {
+    rotEl.textContent = '"' + hints[0] + '"';
+    setInterval(() => { hi = (hi + 1) % hints.length; rotEl.textContent = '"' + hints[hi] + '"'; }, 3000);
+  }
+})();
+
 document.querySelectorAll('.svc-pill').forEach(b => b.addEventListener('click', () => {
-  activeSvc = b.dataset.svc;
-  document.querySelectorAll('.svc-pill').forEach(x => x.classList.toggle('active', x === b));
+  if (b.dataset.domain) {
+    // Phase 3: domain pill clicked
+    const wasActive = b.classList.contains('active');
+    document.querySelectorAll('.svc-pill').forEach(x => x.classList.remove('active'));
+    if (wasActive) {
+      // Deactivate — back to All
+      activeDomainPill = null;
+      activeSvc = 'all';
+      document.querySelector('.svc-pill[data-svc="all"]')?.classList.add('active');
+    } else {
+      activeDomainPill = b.dataset.domain;
+      activeSvc = 'all';
+      b.classList.add('active');
+    }
+  } else {
+    // Service pill clicked
+    activeSvc = b.dataset.svc;
+    activeDomainPill = null;
+    document.querySelectorAll('.svc-pill').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+  }
   render();
+  updateFeaturedVisibility();
 }));
 
 document.querySelectorAll('.tier-tab').forEach(b => b.addEventListener('click', () => {
   activeTier = b.dataset.tier;
   document.querySelectorAll('.tier-tab').forEach(x => x.classList.toggle('active', x === b));
   render();
+  updateFeaturedVisibility();
+}));
+
+// Phase 4: type-tab events
+document.querySelectorAll('.type-tab').forEach(b => b.addEventListener('click', () => {
+  activeType = b.dataset.type;
+  document.querySelectorAll('.type-tab').forEach(x => x.classList.toggle('active', x === b));
+  render();
+  updateFeaturedVisibility();
 }));
 
 document.getElementById('load-more-btn').addEventListener('click', loadMore);
+
+// Command handle click-to-copy (event delegation on both grids)
+(function() {
+  function wireHandleGrid(gridId) {
+    document.getElementById(gridId)?.addEventListener('click', e => {
+      const handle = e.target.closest('.card-command-handle');
+      if (!handle) return;
+      const cmd = handle.dataset.cmd;
+      navigator.clipboard?.writeText(cmd).then(() => {
+        showToast('Command copied!');
+      }).catch(() => {
+        const r = document.createRange(); r.selectNode(handle);
+        window.getSelection()?.removeAllRanges(); window.getSelection()?.addRange(r);
+      });
+    });
+  }
+  wireHandleGrid('card-grid');
+  wireHandleGrid('featured-grid');
+})();
+
+// Terminal mock rotating command in featured section
+const featuredIds = ['featured-adversarial-code-reviewer','featured-autonomous-research-lead','featured-doc-grade-summarizer','featured-chain-of-thought-planner','featured-ui-screenshot-critique','featured-threat-model-owasp','forge-sequential-haiku-workflow'];
+let ltIdx = 0;
+const ltEl = document.getElementById('lt-rotating-cmd');
+if (ltEl) {
+  setInterval(() => {
+    ltIdx = (ltIdx + 1) % featuredIds.length;
+    ltEl.style.opacity = '0';
+    setTimeout(() => {
+      ltEl.textContent = 'paste use ' + featuredIds[ltIdx];
+      ltEl.style.opacity = '1';
+    }, 300);
+  }, 3000);
+}
 
 load();
 </script>
