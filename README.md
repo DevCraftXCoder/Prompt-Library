@@ -180,11 +180,11 @@ These prompts work across any domain and any AI client without modification.
 
 ## Recent Additions
 
-- **Library website overhaul** — 7-phase UI redesign: cmdk search shell with ⌘K hotkey, prompt-type taxonomy tabs (/agent /flow /system /prompt), pill row unification, card metadata parity (stars/comments/version), featured prompts row with 6 curated entries
-- **Slash command badges** — `/command-handle` badges on card headers for direct AI tool integration references
-- **Terminal mock** — Featured section terminal animation demonstrating prompt-to-output flow
-- **Footer CTA redesign** — "Stop pasting. Start shipping." — new conversion-focused footer
-- **Minimal custom scrollbar** — Replaced arrow-button scrollbar with a clean, minimal track
+- **25 product launch / social media prompts** — new section covering Product Hunt, Reddit, LinkedIn, Twitter/X, HN launch copy, cold DMs, and founder story templates
+- **Post-project-update prompt** — structured template for posting regular project goal updates across social platforms
+- **Try-a-different-approach prompt** — quick prompt for breaking out of stuck debugging cycles with a fresh angle
+- **Library intro redesign** — swapped dashboard terminal to a real pnpm quick-access flow showing `degit` → `prompts.json`
+- **Library website overhaul** — cmdk search shell with ⌘K hotkey, prompt-type taxonomy tabs, featured prompts row, card metadata parity
 
 ---
 
