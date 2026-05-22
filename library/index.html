@@ -471,9 +471,41 @@ select{font-family:inherit}
 .lt-cursor{color:#e94560;animation:blink .9s step-end infinite;margin-left:1px}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
+/* ─── Hamburger button (mobile only) ──────────────────────────────── */
+#mob-hamburger{
+  display:none;position:fixed;top:12px;left:12px;z-index:500;
+  background:rgba(8,8,9,0.9);border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;padding:9px 11px;cursor:pointer;
+  flex-direction:column;gap:4px;align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);transition:background 0.15s,border-color 0.15s;
+}
+#mob-hamburger:hover{background:rgba(20,20,22,0.95);border-color:rgba(255,255,255,0.2)}
+#mob-hamburger span{display:block;width:18px;height:2px;background:#ccc;border-radius:1px;transition:transform 0.2s,opacity 0.2s}
+#mob-hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+#mob-hamburger.open span:nth-child(2){opacity:0}
+#mob-hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* ─── Mobile sidebar overlay ──────────────────────────────────────── */
+#mob-sidebar-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);
+  z-index:498;backdrop-filter:blur(2px);
+}
+#mob-sidebar-overlay.visible{display:block}
+
 /* Responsive */
 @media(max-width:768px){
-  #sidebar{display:none}
+  #mob-hamburger{display:flex}
+  #sidebar{
+    display:flex;
+    position:fixed;top:0;left:0;height:100%;z-index:499;
+    width:260px;
+    transform:translateX(-100%);
+    transition:transform 0.25s ease;
+    background:rgba(8,8,9,0.98);
+    box-shadow:4px 0 24px rgba(0,0,0,0.6);
+  }
+  #sidebar.sidebar-open{transform:translateX(0)}
+  body.sidebar-open{overflow:hidden}
   #dash-header{padding:32px 16px 20px}
   #paste-logo-wrap img{width:120px;height:120px}
   #paste-logo-wrap::before{width:240px;height:240px}
@@ -482,7 +514,7 @@ select{font-family:inherit}
   #back-link{top:10px;right:10px;font-size:10px;padding:5px 12px}
 }
 </style>
-<link rel="stylesheet" href="public/prism-bg.css">
+<link rel="stylesheet" href="../public/prism-bg.css">
 </head>
 <body class="has-prism-bg" style="--prism-left:220px">
 
@@ -499,6 +531,12 @@ select{font-family:inherit}
      data-suspend-when-offscreen="true"
      aria-hidden="true"></div>
 <div id="prism-tint" aria-hidden="true"></div>
+
+<!-- Mobile hamburger + overlay -->
+<button id="mob-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="sidebar">
+  <span></span><span></span><span></span>
+</button>
+<div id="mob-sidebar-overlay" role="presentation"></div>
 
 <a id="back-link" href="index.html">← Intro</a>
 <div id="loading">
@@ -526,7 +564,7 @@ select{font-family:inherit}
     <!-- Dash header -->
     <header id="dash-header">
       <a id="paste-logo-wrap" href="index.html" aria-label="Paste — back to intro">
-        <img src="public/paste-icon.png" alt="Paste logo" draggable="false" width="160" height="160"/>
+        <img src="../public/paste-icon.png" alt="Paste logo" draggable="false" width="160" height="160"/>
       </a>
       <h1 class="dash-title">Paste <span class="dash-title-sub">Library</span></h1>
       <p class="dash-count" id="total-count">— prompts</p>
@@ -1135,7 +1173,47 @@ if (ltEl) {
 }
 
 load();
+
+// ── Mobile sidebar toggle ────────────────────────────────────────────
+(function() {
+  const ham = document.getElementById('mob-hamburger');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('mob-sidebar-overlay');
+  if (!ham || !sidebar || !overlay) return;
+
+  function openSidebar() {
+    sidebar.classList.add('sidebar-open');
+    overlay.classList.add('visible');
+    ham.classList.add('open');
+    ham.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('sidebar-open');
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('sidebar-open');
+    overlay.classList.remove('visible');
+    ham.classList.remove('open');
+    ham.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('sidebar-open');
+  }
+
+  ham.addEventListener('click', () => {
+    sidebar.classList.contains('sidebar-open') ? closeSidebar() : openSidebar();
+  });
+  overlay.addEventListener('click', closeSidebar);
+
+  // Close sidebar when a section is selected on mobile
+  sidebar.addEventListener('click', (e) => {
+    if (e.target.closest('.sidebar-tab') && window.innerWidth <= 768) {
+      closeSidebar();
+    }
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('sidebar-open')) closeSidebar();
+  });
+})();
 </script>
-<script type="module" src="public/prism-bg.js"></script>
+<script type="module" src="../public/prism-bg.js"></script>
 </body>
 </html>
