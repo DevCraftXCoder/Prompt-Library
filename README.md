@@ -1,20 +1,20 @@
 <div align="center">
 
-> **Copy-Paste Ready** — Every prompt in this library is production-tested and tiered by depth. Quick prompts resolve in one shot. Combo prompts chain context across a workflow. Paragraph prompts generate complete, structured deliverables.
+> **Copy-Paste Ready** — Every prompt is production-tested and tiered by depth. Quick prompts resolve in one shot. Combo prompts chain context across a workflow. Paragraph prompts generate complete, structured deliverables.
 
 # Prompt Library
 
-### 1000+ Production-Ready Prompts Organized by Tier (Quick / Combo / Paragraph) for AI-Assisted Development, Security, and Workflows
+### 3,900+ Production-Ready Prompts — Organized by Tier, Domain, and Model
 
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Prompts](https://img.shields.io/badge/Prompts-1000%2B-blue.svg)](#whats-included)
+[![Prompts](https://img.shields.io/badge/Prompts-3900%2B-blue.svg)](#whats-included)
 [![Tiers](https://img.shields.io/badge/Tiers-Quick%20%7C%20Combo%20%7C%20Paragraph-purple.svg)](#tier-system)
-[![Sections](https://img.shields.io/badge/Sections-33-orange.svg)](#whats-included)
-[![Format](https://img.shields.io/badge/Format-JSON%20%2B%20TypeScript-lightgrey.svg)](#whats-included)
+[![Sections](https://img.shields.io/badge/Sections-6-orange.svg)](#whats-included)
+[![Format](https://img.shields.io/badge/Format-JSON-lightgrey.svg)](#quick-access)
 
-**1000+ production-ready prompts organized by tier (Quick/Combo/Paragraph) for AI-assisted development, security, and workflows.**
+**[Browse the Library →](https://devcraftxcoder.github.io/Prompt-Library/library)**
 
-[Tier System](#tier-system) | [What's Included](#whats-included) | [Example Prompts](#example-prompts)
+[Tier System](#tier-system) | [What's Included](#whats-included) | [Example Prompts](#example-prompts) | [Quick Access](#quick-access)
 
 </div>
 
@@ -22,9 +22,9 @@
 
 ## Overview
 
-Prompt Library is a structured collection of production-tested AI prompts organized across 33 sections and 5 domains. Each prompt is categorized into one of three tiers based on the depth and complexity of the expected output.
+Prompt Library is a structured collection of 3,900+ production-tested AI prompts organized across 6 sections and multiple domains. Each prompt is categorized by tier (Quick / Combo / Paragraph), model compatibility, and domain — so you always know what you're picking up before you use it.
 
-The library is built for developers, security practitioners, and AI-assisted workflow designers who need prompts that work on the first attempt without customization guesswork.
+Built for developers, security practitioners, and AI workflow designers who need prompts that work on the first attempt.
 
 ---
 
@@ -33,28 +33,28 @@ The library is built for developers, security practitioners, and AI-assisted wor
 ```
 prompts.json
   |
-  +-- domain: Build
-  |     +-- section: Code Review
-  |     |     +-- tier: quick   [ one-shot, < 30 words ]
-  |     |     +-- tier: combo   [ multi-step, chained context ]
-  |     |     +-- tier: paragraph [ complete structured output ]
-  |     +-- section: Refactor
-  |     +-- section: ...
+  +-- section: Core
+  |     +-- tier: quick   [ one-shot, direct answer ]
+  |     +-- tier: combo   [ multi-step, chained context ]
+  |     +-- tier: paragraph [ complete structured deliverable ]
   |
-  +-- domain: Ship
-  +-- domain: Run & Secure
-  +-- domain: Know & Grow
-  +-- domain: Connect & People
+  +-- section: Build
+  +-- section: Ship
+  +-- section: Run & Secure
+  +-- section: Know & Grow
+  +-- section: Connect & People
 ```
 
-Each prompt entry includes:
+Each prompt entry:
 
-```
+```json
 {
   "id": "build-code-review-q-001",
+  "title": "Edge case reviewer",
   "tier": "quick",
-  "section": "Code Review",
-  "domain": "Build",
+  "section": "Build",
+  "domain": "Code Review",
+  "service": "claude",
   "tags": ["code-quality", "typescript"],
   "prompt": "Review this function for edge cases and return a bullet list of issues only."
 }
@@ -66,33 +66,34 @@ Each prompt entry includes:
 
 ### Quick
 
-One-shot prompts that resolve in a single AI response. Use these when you need a direct answer, a concise list, or a short transformation without context threading.
+One-shot prompts that resolve in a single AI response. Use when you need a direct answer, a concise list, or a short transformation.
 
-- Target output length: 1-3 sentences or a bullet list
+- Output: 1–3 sentences or a bullet list
 - No prior context required
-- Optimized for copy-paste into any AI client
+- Drop into any AI client as-is
 
 ### Combo
 
-Multi-step prompts designed to be used in sequence across a workflow. Each prompt in a combo chain references the output of the previous step. Use these for end-to-end task flows — audit + fix, research + plan, review + report.
+Multi-step prompts designed to chain across a workflow. Each step references the output of the previous one.
 
-- Target output: structured intermediate artifact consumed by the next prompt
-- Context threading: each prompt specifies what prior context to include
-- Optimized for multi-turn AI sessions and agent handoffs
+- Output: structured intermediate artifact consumed by the next prompt
+- Optimized for multi-turn sessions and agent handoffs
 
 ### Paragraph
 
-Prompts that generate complete, structured deliverables — full reports, architectural proposals, implementation plans, security assessments. Use these when the AI needs to produce a standalone document.
+Prompts that generate complete, standalone deliverables — full reports, architecture proposals, implementation plans, security assessments.
 
-- Target output: 200-2000 words, structured with headers
-- Self-contained: does not require prior context (includes full instructions)
-- Optimized for final deliverables, not intermediate artifacts
+- Output: 200–2000 words with headers
+- Self-contained — no prior context needed
 
 ---
 
 ## What's Included
 
-33 sections across 5 domains:
+3,900+ prompts across 6 sections:
+
+### Core
+Foundational prompts applicable across all domains — summarization, clarification, assumption extraction, stakeholder translation.
 
 ### Build
 Code Review, Refactor, Implement Feature, Write Tests, Debug, Architecture, Database, API Design, Documentation, Dependency Audit
@@ -159,35 +160,6 @@ Feature: [paste feature description here]
 
 ---
 
-## Appendix A: Universal Quick Prompts
-
-These prompts work across any domain and any AI client without modification.
-
-```
-1.  Summarize this in three bullet points.
-2.  What is the single most critical issue here?
-3.  Rewrite this to be clearer and more concise. Keep all technical content.
-4.  What is missing from this document?
-5.  Identify all assumptions embedded in this plan.
-6.  What are the failure modes of this approach?
-7.  Translate this for a non-technical stakeholder in two sentences.
-8.  List the dependencies this change introduces.
-9.  What would you change if performance were the only constraint?
-10. What would you change if security were the only constraint?
-```
-
----
-
-## Recent Additions
-
-- **25 product launch / social media prompts** — new section covering Product Hunt, Reddit, LinkedIn, Twitter/X, HN launch copy, cold DMs, and founder story templates
-- **Post-project-update prompt** — structured template for posting regular project goal updates across social platforms
-- **Try-a-different-approach prompt** — quick prompt for breaking out of stuck debugging cycles with a fresh angle
-- **Library intro redesign** — swapped dashboard terminal to a real pnpm quick-access flow showing `degit` → `prompts.json`
-- **Library website overhaul** — cmdk search shell with ⌘K hotkey, prompt-type taxonomy tabs, featured prompts row, card metadata parity
-
----
-
 ## Quick Access
 
 Pull the full library locally — no git history, no install:
@@ -196,12 +168,22 @@ Pull the full library locally — no git history, no install:
 pnpm dlx degit DevCraftXCoder/Prompt-Library prompt-library
 ```
 
-Consume `prompts.json` directly in your project:
+Fetch the raw JSON (3,900+ prompts):
 
 ```bash
-# Fetch the raw JSON (3931 prompts)
-curl -s https://raw.githubusercontent.com/DevCraftXCoder/Prompt-Library/main/prompts.json | pnpm dlx json-query ".[0:5]"
+curl -s https://raw.githubusercontent.com/DevCraftXCoder/Prompt-Library/master/prompts.json | head -c 2000
 ```
+
+---
+
+## Recent Additions
+
+- **3,900+ prompts** — library grown from 1,000 to 3,900+ entries across all sections
+- **Clean URLs** — library now served at `/library` (no `.html` extension)
+- **cmdk search shell** — ⌘K hotkey, prompt-type taxonomy tabs, featured prompts row, card metadata
+- **Model mode toggle** — switch between Standard and High-quality preamble per copy
+- **25 product launch / social media prompts** — Product Hunt, Reddit, LinkedIn, Twitter/X, HN launch copy, cold DMs, founder story templates
+- **Domain pill filters** — one-click filter by Engineering, Agents, Security, Data
 
 ---
 
@@ -209,14 +191,14 @@ curl -s https://raw.githubusercontent.com/DevCraftXCoder/Prompt-Library/main/pro
 
 All contributions must follow the tier structure. Submit new prompts with:
 
-- `id`: `{domain}-{section}-{tier-initial}-{sequence}` (e.g. `build-debug-q-042`)
+- `id`: `{section}-{domain}-{tier-initial}-{sequence}` (e.g. `build-debug-q-042`)
 - `tier`: `quick`, `combo`, or `paragraph`
-- `domain`: one of the 5 domains listed above
-- `section`: one of the 33 sections listed above
-- `tags`: 1-3 lowercase kebab-case tags
-- `prompt`: the prompt text with no system instructions embedded (user-turn only)
+- `section`: one of the 6 sections listed above
+- `domain`: sub-domain within the section
+- `tags`: 1–3 lowercase kebab-case tags
+- `prompt`: the prompt text — user-turn only, no embedded system instructions
 
-Test each prompt against at least one AI client before submitting. Prompts that produce inconsistent output across multiple runs are not accepted.
+Test each prompt against at least one AI client before submitting. Prompts that produce inconsistent output across runs are not accepted.
 
 ---
 
