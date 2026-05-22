@@ -1,30 +1,30 @@
-{"tool":"Bash","ts":1778105921456,"command":"cd C:/Za/repos-staging/prompt-library && git add public/prism-bg.css && git commit -m \"style(prism): reduce intensity — opacity 0.35 on canvas + darker tint overlay\" && git push origin master"}
-{"tool":"Bash","ts":1778106140658,"command":"cd C:/Za/repos-staging/prompt-library && git status && git diff --staged | grep -iE \"(api_key|secret|token|password)\" | head -3; echo \"ok\""}
-{"tool":"Bash","ts":1778106147278,"command":"cd C:/Za/repos-staging/prompt-library && git diff --stat"}
-{"tool":"Bash","ts":1778106153064,"command":"cd C:/Za/repos-staging/prompt-library && git diff index.html | head -40"}
-{"tool":"Bash","ts":1778106166981,"command":"cd C:/Za/repos-staging/prompt-library && git add library.html && git commit -m \"$(cat <<'EOF'\ntypography: Space Grotesk + Inter replacing Syne + DM Sans\n\nSwap to professional AI-startup font stack:\n- "}
-{"tool":"Bash","ts":1778106175265,"command":"cd C:/Za/repos-staging/prompt-library && git status --short && git diff --stat"}
-{"tool":"Bash","ts":1778106186572,"command":"cd C:/Za/repos-staging/prompt-library && git add index.html && git commit -m \"feat(nav): use full clipboard+lightbulb logo at top-left, transparent + larger\" && git push origin HEAD 2>&1"}
-{"tool":"Bash","ts":1778106279542,"command":"cp \"C:/Users/J/Documents/paste 4.png\" \"C:/Za/repos-staging/prompt-library/public/paste-icon.png\" && echo \"copied\""}
-{"tool":"Edit","ts":1778106286259,"filePath":"C:\\Za\\repos-staging\\prompt-library\\index.html"}
-{"tool":"Bash","ts":1778106294407,"command":"node C:/Za/francois-landing/scripts/deploy.cjs 2>&1 | tail -15"}
-{"tool":"Edit","ts":1778106346210,"filePath":"C:\\Za\\repos-staging\\prompt-library\\index.html"}
-{"tool":"Edit","ts":1778106361912,"filePath":"C:\\Za\\repos-staging\\prompt-library\\index.html"}
-{"tool":"Bash","ts":1778106370433,"command":"cd C:/Za/repos-staging/prompt-library && git add index.html public/paste-icon.png && git commit -m \"feat(nav): replace top-left logo with paste-icon.png, radial mask removes grey bg\" && git push origi"}
-{"tool":"Edit","ts":1778106684498,"filePath":"C:\\Za\\repos-staging\\prompt-library\\public\\prism-bg.css"}
-{"tool":"Bash","ts":1778106690810,"command":"cd C:/Za/repos-staging/prompt-library && git add public/prism-bg.css && git commit -m \"style(prism): nudge intensity up — opacity 0.55, lighter tint\" && git push origin master"}
-{"tool":"Bash","ts":1778109770723,"command":"cd C:/Za/repos-staging/attack-map && git rev-parse HEAD 2>&1 ; cd C:/Za/repos-staging/prompt-library && git status --short 2>&1 | head -5"}
-{"tool":"Bash","ts":1778109775228,"command":"grep -n \"pregame-injuries\\|injuries\" C:/Za/audit.js 2>&1 | head -10"}
-{"tool":"Read","ts":1778109778135,"filePath":"C:\\Za\\audit.js"}
-{"tool":"Bash","ts":1778109790906,"command":"pm2 restart ev-betta-pregame-injuries 2>&1 | tail -10"}
-{"tool":"Read","ts":1778109792197,"filePath":"C:\\Za\\francois-landing\\.gitignore"}
-{"tool":"Read","ts":1778109792199,"filePath":"C:\\Za\\.gitignore"}
-{"tool":"Bash","ts":1778109794430,"command":"cat C:/Za/mizzy-tools/.gitignore 2>&1"}
-{"tool":"Edit","ts":1778109809075,"filePath":"C:\\Za\\.gitignore"}
-{"tool":"Edit","ts":1778109810698,"filePath":"C:\\Za\\francois-landing\\.gitignore"}
-{"tool":"Read","ts":1778109813425,"filePath":"C:\\Za\\mizzy-tools\\.gitignore"}
-{"tool":"Edit","ts":1778109817521,"filePath":"C:\\Za\\mizzy-tools\\.gitignore"}
-{"tool":"Bash","ts":1778219057752,"command":"cd \"C:/Za/repos-staging/prompt-library\" && git remote -v 2>&1 | head -3"}
-{"tool":"Bash","ts":1778219143301,"command":"cd \"C:/Za/_portfolio/Prompt-Library\" && git log --oneline -3 2>&1; echo ---; cd \"C:/Za/repos-staging/prompt-library\" && git log --oneline -3 2>&1"}
-{"tool":"Bash","ts":1778219202074,"command":"cd \"C:/Za/_portfolio/Prompt-Library\" && git status --short && echo BRANCH: && git rev-parse --abbrev-ref HEAD && echo --- && cd \"C:/Za/repos-staging/prompt-library\" && git status --short && echo BRANC"}
-{"tool":"Bash","ts":1779073301388,"command":"cd \"C:/Za/repos-staging/prompt-library\" && sed -i '373d' index.html && echo \"Removed eyebrow from staging index.html\""}
+{"tool":"Read","ts":1779456864220,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\library\\index.html"}
+{"tool":"Edit","ts":1779456869230,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\library\\index.html"}
+{"tool":"Edit","ts":1779456874872,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\library\\index.html"}
+{"tool":"Bash","ts":1779456880593,"command":"grep -n \"library.html\" C:/Za/_portfolio/Prompt-Library/index.html"}
+{"tool":"Read","ts":1779456883725,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\index.html"}
+{"tool":"Edit","ts":1779456889102,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\index.html","replaceAll":true}
+{"tool":"Bash","ts":1779456898421,"command":"cd C:/Za/_portfolio/Prompt-Library && git rm library.html && git add library/ index.html && git commit -m \"fix: move library.html to library/index.html — clean URL /library (no .html)\" && git push ori"}
+{"tool":"Read","ts":1779457137886,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\README.md"}
+{"tool":"Write","ts":1779457181258,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\README.md"}
+{"tool":"Bash","ts":1779457192156,"command":"cd C:/Za/_portfolio/Prompt-Library && git add README.md && git commit -m \"docs: update README — 3900+ prompts, 6 sections, clean /library URL, current feature list\" && git push origin master"}
+{"tool":"Bash","ts":1779457454021,"command":"head -c 2000 C:/Za/_portfolio/Prompt-Library/prompts.json"}
+{"tool":"Read","ts":1779457755168,"filePath":"C:\\Users\\J\\Documents\\100_ai_prompts_complete_2026_collection.md"}
+{"tool":"Read","ts":1779457755989,"filePath":"C:\\Users\\J\\Documents\\100_ai_prompts_complete_2026_collection 2.md"}
+{"tool":"Read","ts":1779457756636,"filePath":"C:\\Users\\J\\Documents\\100_ai_prompts_complete_2026_collection 3.md"}
+{"tool":"Read","ts":1779457761769,"filePath":"C:\\Users\\J\\Documents\\100_ai_prompts_complete_2026_collection.md"}
+{"tool":"Bash","ts":1779457798701,"command":"mkdir -p C:/Za/_portfolio/Prompt-Library/creative"}
+{"tool":"Read","ts":1779457866259,"filePath":"C:\\Users\\J\\Documents\\100_ai_prompts_complete_2026_collection.md"}
+{"tool":"Read","ts":1779457866893,"filePath":"C:\\Users\\J\\Documents\\100_ai_prompts_complete_2026_collection 3.md"}
+{"tool":"Write","ts":1779458552309,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\scripts\\add-creative-prompts.cjs"}
+{"tool":"Read","ts":1779458665344,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\scripts\\add-creative-prompts.cjs"}
+{"tool":"Read","ts":1779458665554,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\library\\index.html"}
+{"tool":"Read","ts":1779458676320,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\scripts\\add-creative-prompts.cjs"}
+{"tool":"Grep","ts":1779458676563}
+{"tool":"Read","ts":1779458683357,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\scripts\\add-creative-prompts.cjs"}
+{"tool":"Write","ts":1779459492436,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\scripts\\add-artist-prompts.cjs"}
+{"tool":"Bash","ts":1779459567057,"command":"cd \"C:\\Za\\_portfolio\\Prompt-Library\" && node scripts/add-creative-prompts.cjs"}
+{"tool":"Read","ts":1779459567377,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\library\\index.html"}
+{"tool":"Bash","ts":1779459572701,"command":"cd \"C:\\Za\\_portfolio\\Prompt-Library\" && node scripts/add-artist-prompts.cjs"}
+{"tool":"Edit","ts":1779459575759,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\library\\index.html"}
+{"tool":"Edit","ts":1779459579652,"filePath":"C:\\Za\\_portfolio\\Prompt-Library\\library\\index.html"}

@@ -657,6 +657,8 @@ const SECTION_META = {
   'Run & Secure':    { icon: '🔒', label: 'Run & Secure' },
   'Know & Grow':     { icon: '📚', label: 'Know & Grow' },
   'Connect & People':{ icon: '🤝', label: 'Connect & People' },
+  'Create':          { icon: '🎨', label: 'Create' },
+  'Artist':          { icon: '🎵', label: 'Artist Visuals' },
 };
 
 async function load() {
@@ -683,7 +685,7 @@ function buildSidebar() {
 
   const list = document.getElementById('sidebar-list');
   list.innerHTML = '';
-  const sections = ['all', 'Core', 'Build', 'Ship', 'Run & Secure', 'Know & Grow', 'Connect & People'];
+  const sections = ['all', 'Core', 'Build', 'Ship', 'Run & Secure', 'Know & Grow', 'Connect & People', 'Create', 'Artist'];
   for (const sec of sections) {
     const m = SECTION_META[sec] || { icon: '📁', label: sec };
     const count = counts[sec] || 0;
