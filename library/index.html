@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Prompt Library</title>
 <meta name="description" content="Browse 3,900+ production-ready prompts. Filter by section, domain, tier, and model. Copy with one click."/>
-<link rel="canonical" href="https://devcraftxcoder.github.io/Prompt-Library/library.html"/>
+<link rel="canonical" href="https://devcraftxcoder.github.io/Prompt-Library/library"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -661,7 +661,7 @@ const SECTION_META = {
 
 async function load() {
   try {
-    const r = await fetch('./prompts.json');
+    const r = await fetch('../prompts.json');
     allPrompts = await r.json();
     document.getElementById('total-count').textContent = `${allPrompts.length.toLocaleString()} prompts`;
     const eyebrow = document.getElementById('total-count-eyebrow');
