@@ -4,7 +4,7 @@
 
 # Prompt Library
 
-**3,900+ curated AI prompts across 33+ domains — tiered by depth and use case.**
+**3,900+ curated prompts across 33+ domains — tiered by depth and use case.**
 
 [![Prompts](https://img.shields.io/badge/Prompts-3900%2B-brightgreen.svg)](#browse-the-library)
 [![Domains](https://img.shields.io/badge/Domains-33%2B-blue.svg)](#domains)
@@ -17,7 +17,7 @@
 
 ## What It Is
 
-A structured collection of 3,900+ AI prompts organized by domain, tiered by complexity, and designed to be copy-paste ready. Covers technical development, creative writing, business strategy, research, security, music, visual art, and more.
+A structured collection of 3,900+ prompts organized by domain, tiered by complexity, and designed to be copy-paste ready. Covers technical development, creative writing, business strategy, research, security, music, visual art, and more.
 
 ## Prompt Tiers
 
