@@ -53,3 +53,30 @@ A structured collection of 3,900+ prompts organized by domain, tiered by complex
 
 Built with HTML + CSS + JavaScript, hosted on GitHub Pages. No dependencies, no build step, instant search.
 
+## Use in Claude Code
+
+Bring the whole library into Claude Code as an MCP server — search, browse, compose, and inject prompts without leaving the terminal.
+
+```bash
+git clone https://github.com/DevCraftXCoder/Prompt-Library.git
+cd Prompt-Library/paste-mcp
+
+# macOS / Linux / WSL / Git Bash
+bash install.sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy Bypass -File install.ps1
+```
+
+Restart Claude Code, then ask it to search the library or call `paste_help`. Full tool reference: [paste-mcp/README.md](paste-mcp/README.md).
+
+## Consume the JSON directly
+
+```bash
+# Pull the full library locally — no git history
+pnpm dlx degit DevCraftXCoder/Prompt-Library prompt-library
+
+# Or fetch the raw JSON
+curl -s https://raw.githubusercontent.com/DevCraftXCoder/Prompt-Library/master/prompts.json | pnpm dlx json-query ".[0:5]"
+```
+

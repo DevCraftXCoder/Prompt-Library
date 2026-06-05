@@ -1,0 +1,3 @@
+node_modules/
+# Bundled offline fallback is generated at install time and stays in sync with ../prompts.json.
+prompts.local.json
